@@ -107,24 +107,24 @@ export const DashboardLayout = ({ userData }: DashboardLayoutProps) => {
             <img 
               src={ecopalMascot} 
               alt="EcoPal" 
-              className="w-16 h-16 rounded-full animate-float"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full animate-float"
             />
             <div>
-              <h1 className="text-3xl font-bold">Welcome back, Eco Champion! 🌟</h1>
-              <p className="text-muted-foreground">{getPersonalizedRecommendation()}</p>
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">Welcome back, Eco Champion! 🌟</h1>
+              <p className="text-sm sm:text-base text-muted-foreground">{getPersonalizedRecommendation()}</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
-            <Card className="p-4 bg-gradient-success text-white">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Card className="p-2 sm:p-4 bg-gradient-success text-white">
               <div className="text-center">
-                <div className="text-2xl font-bold">{userStats.streak}</div>
+                <div className="text-lg sm:text-2xl font-bold">{userStats.streak}</div>
                 <div className="text-xs">Day Streak 🔥</div>
               </div>
             </Card>
-            <Card className="p-4 bg-gradient-primary text-white">
+            <Card className="p-2 sm:p-4 bg-gradient-primary text-white">
               <div className="text-center">
-                <div className="text-2xl font-bold">{userStats.totalPoints}</div>
+                <div className="text-lg sm:text-2xl font-bold">{userStats.totalPoints}</div>
                 <div className="text-xs">Total Points ⭐</div>
               </div>
             </Card>
@@ -216,7 +216,7 @@ export const DashboardLayout = ({ userData }: DashboardLayoutProps) => {
         </Card>
 
         {/* Recent Achievements */}
-        <Card>
+        <Card id="achievements-section">
           <CardHeader>
             <CardTitle>🏆 Recent Achievements</CardTitle>
           </CardHeader>
@@ -239,21 +239,49 @@ export const DashboardLayout = ({ userData }: DashboardLayoutProps) => {
             <div className="text-3xl mb-3">📚</div>
             <h3 className="font-bold mb-2">Learning Path</h3>
             <p className="text-sm text-muted-foreground mb-4">Continue your personalized curriculum</p>
-            <Button variant="outline" className="w-full">View Progress</Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => {
+                // Scroll to achievements section
+                const achievementsSection = document.querySelector('#achievements-section');
+                achievementsSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              View Progress
+            </Button>
           </Card>
           
           <Card className="p-6 text-center bg-gradient-card hover:shadow-glow transition-all">
             <div className="text-3xl mb-3">👥</div>
             <h3 className="font-bold mb-2">Community</h3>
             <p className="text-sm text-muted-foreground mb-4">Join challenges with friends</p>
-            <Button variant="outline" className="w-full">Join Community</Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => {
+                // Simulate community feature
+                alert('🌟 Community feature coming soon! Join our leaderboards and compete with eco-champions worldwide!');
+              }}
+            >
+              Join Community
+            </Button>
           </Card>
           
           <Card className="p-6 text-center bg-gradient-card hover:shadow-glow transition-all">
             <div className="text-3xl mb-3">🛍️</div>
             <h3 className="font-bold mb-2">Eco Shop</h3>
             <p className="text-sm text-muted-foreground mb-4">Discover sustainable products</p>
-            <Button variant="outline" className="w-full">Explore Shop</Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => {
+                // Open eco-shop in new tab
+                window.open('https://www.ecosia.org/shop', '_blank');
+              }}
+            >
+              Explore Shop
+            </Button>
           </Card>
         </div>
       </div>

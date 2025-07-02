@@ -2,12 +2,15 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useEcoToast } from "@/hooks/useToast";
+import { analytics } from "@/utils/analytics";
 
 interface GameSimulationProps {
   type: "solar-village" | "carbon-tracker" | "green-budget";
 }
 
 export const GameSimulation = ({ type }: GameSimulationProps) => {
+  const { showSuccess, showAchievement } = useEcoToast();
   const [gameState, setGameState] = useState({
     energy: 50,
     happiness: 70,
@@ -38,25 +41,40 @@ export const GameSimulation = ({ type }: GameSimulationProps) => {
   ];
 
   const handleItemSelect = (item: any) => {
+    analytics.trackButtonClick(item.name, `game_${type}`);
+    
     if (type === "solar-village") {
       if (gameState.budget >= item.cost && !selectedItems.includes(item.id)) {
-        setGameState(prev => ({
-          ...prev,
-          budget: prev.budget - item.cost,
-          energy: prev.energy + (item.energy || 0),
-          happiness: prev.happiness + (item.happiness || 0),
-          progress: Math.min(100, prev.progress + 15),
-          score: prev.score + 10
-        }));
+        const newState = {
+          ...gameState,
+          budget: gameState.budget - item.cost,
+          energy: gameState.energy + (item.energy || 0),
+          happiness: gameState.happiness + (item.happiness || 0),
+          progress: Math.min(100, gameState.progress + 15),
+          score: gameState.score + 10
+        };
+        
+        setGameState(newState);
         setSelectedItems(prev => [...prev, item.id]);
+        showSuccess(`Added ${item.name} to your village! +10 points`);
+        
+        // Check for achievements
+        if (newState.progress >= 50 && gameState.progress < 50) {
+          showAchievement("Village Builder", 50);
+        }
       }
     } else if (type === "carbon-tracker") {
+      const newScore = gameState.score + (item.carbon < 0 ? 5 : -2);
       setGameState(prev => ({
         ...prev,
         carbonFootprint: Math.max(0, prev.carbonFootprint + item.carbon),
         progress: Math.min(100, prev.progress + 10),
-        score: prev.score + (item.carbon < 0 ? 5 : -2)
+        score: newScore
       }));
+      
+      if (item.carbon < 0) {
+        showSuccess(`Great choice! Reduced carbon footprint by ${Math.abs(item.carbon)}kg CO₂`);
+      }
     }
   };
 
@@ -200,7 +218,14 @@ export const GameSimulation = ({ type }: GameSimulationProps) => {
           </Button>
           
           {gameState.progress >= 80 && (
-            <Button variant="success" className="animate-pulse-glow">
+            <Button 
+              variant="success" 
+              className="animate-pulse-glow"
+              onClick={() => {
+                showAchievement("Challenge Completed!", 100);
+                analytics.track('challenge_completed', { type, score: gameState.score });
+              }}
+            >
               🏆 Complete Challenge
             </Button>
           )}

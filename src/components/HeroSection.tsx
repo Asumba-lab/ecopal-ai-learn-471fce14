@@ -12,14 +12,14 @@ export const HeroSection = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 animate-float">
+      {/* Floating Elements - Hidden on mobile for better UX */}
+      <div className="hidden md:block absolute top-20 left-10 animate-float">
         <Card className="p-4 bg-white/90 backdrop-blur-sm">
           <div className="text-success font-bold">🌱 50 Trees Planted</div>
         </Card>
       </div>
       
-      <div className="absolute top-40 right-20 animate-float" style={{ animationDelay: '1s' }}>
+      <div className="hidden md:block absolute top-40 right-20 animate-float" style={{ animationDelay: '1s' }}>
         <Card className="p-3 bg-white/90 backdrop-blur-sm">
           <div className="text-gold font-bold">⚡ 1000 kWh Saved</div>
         </Card>
@@ -40,22 +40,37 @@ export const HeroSection = () => {
               <span className="text-white font-medium">Meet EcoPal, your AI learning companion!</span>
             </div>
             
-            <h1 className="text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               Learn Green,
               <br />
               <span className="text-primary-glow">Play Smart</span>
             </h1>
             
-            <p className="text-xl text-white/90 mb-8 max-w-2xl">
+            <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto lg:mx-0">
               Master sustainability through AI-powered microlearning and gamified challenges. 
               Build eco-villages, track your carbon footprint, and compete with friends to save the planet!
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button variant="hero" size="xl" className="animate-pulse-glow">
+              <Button 
+                variant="hero" 
+                size="xl" 
+                className="animate-pulse-glow"
+                onClick={() => {
+                  const ctaSection = document.querySelector('#cta-section');
+                  ctaSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 🚀 Start Learning Now
               </Button>
-              <Button variant="gamified" size="xl">
+              <Button 
+                variant="gamified" 
+                size="xl"
+                onClick={() => {
+                  const featuresSection = document.querySelector('#features-section');
+                  featuresSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 🎮 Play Demo
               </Button>
             </div>
@@ -111,7 +126,14 @@ export const HeroSection = () => {
                     </div>
                   </div>
                   
-                  <Button variant="success" className="w-full">
+                  <Button 
+                    variant="success" 
+                    className="w-full"
+                    onClick={() => {
+                      const ctaSection = document.querySelector('#cta-section');
+                      ctaSection?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
                     Continue Challenge
                   </Button>
                 </div>

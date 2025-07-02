@@ -3,6 +3,8 @@ import { HeroSection } from "@/components/HeroSection";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { OnboardingModal } from "@/components/OnboardingModal";
 import { DashboardLayout } from "@/components/DashboardLayout";
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 
 interface UserData {
   age: string;
@@ -27,11 +29,20 @@ const Index = () => {
   };
 
   if (showDashboard && userData) {
-    return <DashboardLayout userData={userData} />;
+    return (
+      <>
+        <Navigation 
+          showBackButton={true}
+          onBackToLanding={() => setShowDashboard(false)}
+        />
+        <DashboardLayout userData={userData} />
+      </>
+    );
   }
 
   return (
     <div className="min-h-screen">
+      <Navigation />
       <HeroSection />
       <FeaturesSection />
       
@@ -41,7 +52,7 @@ const Index = () => {
       />
       
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-hero text-white text-center">
+      <section id="cta-section" className="py-20 bg-gradient-hero text-white text-center">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold mb-6">Ready to Change the World?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -55,6 +66,8 @@ const Index = () => {
           </button>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };

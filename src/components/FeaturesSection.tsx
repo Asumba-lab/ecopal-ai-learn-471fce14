@@ -42,7 +42,7 @@ const features = [
 
 export const FeaturesSection = () => {
   return (
-    <section className="py-20 bg-background">
+    <section id="features-section" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         
         {/* Section Header */}
@@ -92,10 +92,23 @@ export const FeaturesSection = () => {
                 Join thousands of learners already making a difference through EcoPal's innovative approach to sustainability education.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="gamified" size="xl" className="bg-white text-primary hover:bg-white/90">
+                <Button 
+                  variant="gamified" 
+                  size="xl" 
+                  className="bg-white text-primary hover:bg-white/90"
+                  onClick={() => {
+                    const ctaSection = document.querySelector('#cta-section');
+                    ctaSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   🚀 Start Free Trial
                 </Button>
-                <Button variant="outline" size="xl" className="border-white text-white hover:bg-white hover:text-primary">
+                <Button 
+                  variant="outline" 
+                  size="xl" 
+                  className="border-white text-white hover:bg-white hover:text-primary"
+                  onClick={() => window.open('https://docs.lovable.dev', '_blank')}
+                >
                   📚 Explore Curriculum
                 </Button>
               </div>
