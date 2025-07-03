@@ -35,11 +35,11 @@ export const HeroSection = () => {
           
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left">
-            <div className="inline-flex items-center gap-3 mb-6 bg-gradient-primary/20 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20">
+            <div className="inline-flex items-center gap-3 mb-6 rounded-full px-6 py-3">
               <img 
                 src={ecopalMascot} 
                 alt="EcoPal Mascot" 
-                className="w-10 h-10 rounded-full border-2 border-white/30"
+                className="w-10 h-10 rounded-full"
               />
               <span className="text-white font-medium">Meet EcoPal, your AI learning companion!</span>
             </div>

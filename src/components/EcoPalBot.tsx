@@ -25,6 +25,11 @@ const sampleQuestions = [
   "What are the benefits of solar energy?",
   "How does climate change affect the environment?",
   "What are sustainable living practices?",
+  "Explain wind energy and its advantages",
+  "What is carbon capture technology?",
+  "How do electric vehicles help the environment?",
+  "What are microgrids and smart energy systems?",
+  "Tell me about sustainable agriculture",
 ];
 
 const ecopalResponses: Record<string, string> = {
@@ -33,7 +38,17 @@ const ecopalResponses: Record<string, string> = {
   "what are the benefits of solar energy": "Solar energy is amazing! Benefits include: zero emissions during operation, reduced electricity bills, low maintenance costs, energy independence, and it's inexhaustible. Plus, solar panel costs have dropped by 80% in the last decade! ☀️💰",
   "how does climate change affect the environment": "Climate change causes rising sea levels, extreme weather events, melting ice caps, ecosystem disruption, and species extinction. But here's the good news - we can combat it through renewable energy, reforestation, and sustainable practices! 🌊🔥❄️",
   "what are sustainable living practices": "Sustainable living includes: reducing energy consumption, recycling and composting, buying local and organic foods, using eco-friendly products, conserving water, and supporting renewable energy. It's about meeting our needs without compromising future generations! 🌿🏠",
-  "default": "That's a fantastic environmental question! While I'm still learning, I can help you explore topics like renewable energy, climate action, sustainable living, and green technology. Try asking me about solar energy, carbon footprints, or eco-friendly practices! 🌱🤖"
+  "explain wind energy": "Wind energy harnesses the kinetic energy of moving air using wind turbines. It's one of the fastest-growing renewable energy sources! Benefits include: no fuel costs, minimal water usage, land can still be used for farming, and modern turbines are 85% recyclable. 💨🌪️",
+  "what is carbon capture technology": "Carbon capture and storage (CCS) technology captures CO2 emissions from industrial processes and power plants, then stores it underground or uses it for other purposes. It's crucial for achieving net-zero emissions and can reduce emissions by up to 90%! 🏭💨",
+  "how do electric vehicles help": "Electric vehicles (EVs) produce zero direct emissions and are 3-4x more energy efficient than gas cars. They reduce air pollution, lower maintenance costs, and as the grid gets cleaner, EVs become even more environmentally friendly! 🚗⚡",
+  "what are microgrids": "Microgrids are small-scale, localized energy systems that can operate independently or connect to the main grid. They integrate renewable energy sources, energy storage, and smart controls to provide reliable, clean power to communities! 🔌🏘️",
+  "sustainable agriculture": "Sustainable agriculture focuses on producing food while protecting the environment through practices like crop rotation, organic farming, precision agriculture, and reducing pesticide use. It maintains soil health, conserves water, and supports biodiversity! 🌾🚜",
+  "geothermal energy": "Geothermal energy harnesses heat from the Earth's core for electricity and heating. It's available 24/7, has a tiny land footprint, and produces virtually no emissions. Iceland gets 25% of its electricity from geothermal! 🌋♨️",
+  "ocean energy": "Ocean energy includes wave, tidal, and thermal energy conversion. The ocean contains enough energy to power the world several times over! Tidal energy is highly predictable, and wave energy has enormous potential. 🌊⚡",
+  "green hydrogen": "Green hydrogen is produced using renewable energy to split water into hydrogen and oxygen. It can store renewable energy, fuel vehicles, heat homes, and power industry without emissions. It's the key to decarbonizing hard-to-electrify sectors! 💧⚡",
+  "circular economy": "A circular economy eliminates waste by designing products to be reused, repaired, and recycled. Instead of 'take-make-dispose,' it follows 'reduce-reuse-recycle.' This approach can reduce resource consumption by 80% and create millions of jobs! ♻️🔄",
+  "smart cities": "Smart cities use IoT sensors, data analytics, and renewable energy to optimize resource use, reduce emissions, and improve quality of life. Features include smart grids, efficient transportation, green buildings, and waste management systems! 🏙️📱",
+  "default": "That's a fantastic environmental question! As an AI learning companion, I'm designed to help with topics like renewable energy, climate action, sustainable living, green technology, carbon capture, electric vehicles, and much more. This is an open-source project - the community can help expand my knowledge! 🌱🤖"
 };
 
 export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
@@ -55,10 +70,28 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
       return ecopalResponses[normalizedInput];
     }
     
-    // Check for partial matches
-    for (const [key, response] of Object.entries(ecopalResponses)) {
-      if (key !== 'default' && normalizedInput.includes(key.split(' ')[0])) {
-        return response;
+    // Enhanced keyword matching for better responses
+    const keywords = [
+      { keys: ['wind', 'turbine'], response: 'explain wind energy' },
+      { keys: ['carbon', 'capture', 'ccs'], response: 'what is carbon capture technology' },
+      { keys: ['electric', 'vehicle', 'ev', 'car'], response: 'how do electric vehicles help' },
+      { keys: ['microgrid', 'smart', 'grid'], response: 'what are microgrids' },
+      { keys: ['agriculture', 'farming', 'food'], response: 'sustainable agriculture' },
+      { keys: ['geothermal', 'ground', 'heat'], response: 'geothermal energy' },
+      { keys: ['ocean', 'wave', 'tidal', 'marine'], response: 'ocean energy' },
+      { keys: ['hydrogen', 'h2', 'fuel', 'cell'], response: 'green hydrogen' },
+      { keys: ['circular', 'economy', 'waste', 'recycle'], response: 'circular economy' },
+      { keys: ['smart', 'city', 'cities', 'urban'], response: 'smart cities' },
+      { keys: ['renewable'], response: 'what is renewable energy' },
+      { keys: ['solar'], response: 'what are the benefits of solar energy' },
+      { keys: ['climate'], response: 'how does climate change affect the environment' },
+      { keys: ['sustainable'], response: 'what are sustainable living practices' },
+      { keys: ['footprint'], response: 'how can i reduce my carbon footprint' }
+    ];
+    
+    for (const { keys, response } of keywords) {
+      if (keys.some(key => normalizedInput.includes(key))) {
+        return ecopalResponses[response] || ecopalResponses.default;
       }
     }
     
@@ -130,7 +163,12 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
             ))}
             <Card className="p-3 bg-gradient-success text-white">
               <p className="text-sm">
-                💡 <strong>Tip:</strong> Ask me about solar panels, wind energy, recycling, or any green topic!
+                💡 <strong>Open Source Project:</strong> EcoPal's knowledge base grows with community contributions! Ask about renewable energy, climate tech, sustainable solutions, and more!
+              </p>
+            </Card>
+            <Card className="p-3 bg-gradient-primary text-white mt-3">
+              <p className="text-sm">
+                🌍 <strong>Demo Mode:</strong> Experience real-time AI responses on environmental topics. Try asking about carbon capture, smart cities, or green hydrogen!
               </p>
             </Card>
           </div>
