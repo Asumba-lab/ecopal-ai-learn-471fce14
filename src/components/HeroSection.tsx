@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { EcoPalBot } from "@/components/EcoPalBot";
 import heroImage from "@/assets/hero-image.jpg";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 
 export const HeroSection = () => {
+  const [isBotOpen, setIsBotOpen] = useState(false);
+
   return (
     <div className="relative min-h-screen bg-gradient-hero overflow-hidden">
       {/* Background Image */}
@@ -31,11 +35,11 @@ export const HeroSection = () => {
           
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left">
-            <div className="inline-flex items-center gap-3 mb-6 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3">
+            <div className="inline-flex items-center gap-3 mb-6 bg-gradient-primary/20 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20">
               <img 
                 src={ecopalMascot} 
                 alt="EcoPal Mascot" 
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full border-2 border-white/30"
               />
               <span className="text-white font-medium">Meet EcoPal, your AI learning companion!</span>
             </div>
@@ -66,10 +70,7 @@ export const HeroSection = () => {
               <Button 
                 variant="gamified" 
                 size="xl"
-                onClick={() => {
-                  const featuresSection = document.querySelector('#features-section');
-                  featuresSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => setIsBotOpen(true)}
               >
                 🎮 Play Demo
               </Button>
@@ -142,6 +143,11 @@ export const HeroSection = () => {
           </div>
         </div>
       </div>
+      
+      <EcoPalBot 
+        isOpen={isBotOpen}
+        onClose={() => setIsBotOpen(false)}
+      />
     </div>
   );
 };
