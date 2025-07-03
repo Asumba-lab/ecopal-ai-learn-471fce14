@@ -49,6 +49,7 @@ const Index = () => {
       <OnboardingModal 
         isOpen={isOnboarding}
         onComplete={handleOnboardingComplete}
+        onClose={() => setIsOnboarding(false)}
       />
       
       {/* CTA Section */}

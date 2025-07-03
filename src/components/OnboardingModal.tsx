@@ -7,6 +7,7 @@ import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 interface OnboardingModalProps {
   isOpen: boolean;
   onComplete: (userData: UserData) => void;
+  onClose?: () => void;
 }
 
 interface UserData {
@@ -46,7 +47,7 @@ const experienceLevels = [
   { value: "expert", label: "Expert Level", description: "Deep knowledge", icon: "🌲" }
 ];
 
-export const OnboardingModal = ({ isOpen, onComplete }: OnboardingModalProps) => {
+export const OnboardingModal = ({ isOpen, onComplete, onClose }: OnboardingModalProps) => {
   const [step, setStep] = useState(0);
   const [userData, setUserData] = useState<UserData>({
     age: "",
@@ -165,7 +166,7 @@ export const OnboardingModal = ({ isOpen, onComplete }: OnboardingModalProps) =>
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose?.()}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-4">
