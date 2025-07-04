@@ -116,7 +116,17 @@ const Learning = () => {
                   <Button 
                     variant="outline" 
                     className="w-full mt-6"
-                    onClick={() => alert(`🌟 Deep dive content for ${topic.title} coming soon! Start with our interactive challenges in the main app.`)}
+                    onClick={() => {
+                      const topicRoutes = {
+                        0: '/topics/climate-change',
+                        1: '/topics/renewable-energy', 
+                        2: '/topics/carbon-capture',
+                        3: '/topics/circular-economy',
+                        4: '/topics/water-conservation',
+                        5: '/topics/sustainable-living'
+                      };
+                      window.location.href = topicRoutes[index as keyof typeof topicRoutes];
+                    }}
                   >
                     Explore Topic
                   </Button>
