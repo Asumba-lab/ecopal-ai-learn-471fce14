@@ -16,16 +16,16 @@ export const HeroSection = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       />
       
-      {/* Floating Elements - Hidden on mobile for better UX */}
-      <div className="hidden md:block absolute top-20 left-10 animate-float">
-        <Card className="p-4 bg-white/90 backdrop-blur-sm">
-          <div className="text-success font-bold">🌱 50 Trees Planted</div>
+      {/* Floating Elements - Repositioned for better layout */}
+      <div className="hidden xl:block absolute top-32 left-4 animate-float">
+        <Card className="p-3 bg-white/90 backdrop-blur-sm shadow-sm">
+          <div className="text-success font-bold text-sm">🌱 50 Trees Planted</div>
         </Card>
       </div>
       
-      <div className="hidden md:block absolute top-40 right-20 animate-float" style={{ animationDelay: '1s' }}>
-        <Card className="p-3 bg-white/90 backdrop-blur-sm">
-          <div className="text-gold font-bold">⚡ 1000 kWh Saved</div>
+      <div className="hidden xl:block absolute bottom-32 right-4 animate-float" style={{ animationDelay: '1s' }}>
+        <Card className="p-3 bg-white/90 backdrop-blur-sm shadow-sm">
+          <div className="text-gold font-bold text-sm">⚡ 1000 kWh Saved</div>
         </Card>
       </div>
       
