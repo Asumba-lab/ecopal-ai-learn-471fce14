@@ -104,10 +104,10 @@ export const FeaturesSection = () => {
                   🚀 Start Free Trial
                 </Button>
                 <Button 
-                  variant="outline" 
+                  variant="gamified" 
                   size="xl" 
-                  className="border-white text-white hover:bg-white hover:text-primary"
-                  onClick={() => window.open('https://docs.lovable.dev', '_blank')}
+                  className="border-white/20 text-white hover:bg-white/10 hover:border-white/40 shadow-soft"
+                  onClick={() => window.location.href = '/curriculum'}
                 >
                   📚 Explore Curriculum
                 </Button>

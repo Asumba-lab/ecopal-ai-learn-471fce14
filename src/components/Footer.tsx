@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 
 export const Footer = () => {
@@ -80,16 +81,7 @@ export const Footer = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Get the latest eco-learning tips and challenges
             </p>
-            <div className="space-y-2">
-              <Button 
-                variant="hero" 
-                size="sm" 
-                className="w-full"
-                onClick={() => alert('🌟 Newsletter signup coming soon! Get ready for amazing eco-tips!')}
-              >
-                Subscribe 📧
-              </Button>
-            </div>
+            <NewsletterForm variant="hero" size="sm" />
           </div>
         </div>
 

@@ -51,7 +51,7 @@ export const Navigation = ({ onBackToLanding, showBackButton = false }: Navigati
             <Button 
               variant="outline" 
               size="sm"
-              onClick={() => window.open('https://docs.lovable.dev', '_blank')}
+              onClick={() => window.location.href = '/learning'}
             >
               Learn More
             </Button>
