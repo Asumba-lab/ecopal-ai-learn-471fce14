@@ -101,12 +101,12 @@ export const FeaturesSection = () => {
                     ctaSection?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  🚀 Start Free Trial
+                  🤖 Ecopal AI Companion
                 </Button>
                 <Button 
                   variant="gamified" 
                   size="xl" 
-                  className="border-white/20 text-white hover:bg-white/10 hover:border-white/40 shadow-soft"
+                  className="bg-green-600 text-white hover:bg-green-700 hover:border-green-700 shadow-soft"
                   onClick={() => window.location.href = '/curriculum'}
                 >
                   📚 Explore Curriculum
