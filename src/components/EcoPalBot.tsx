@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Send, Bot, User, Lightbulb, MessageCircle } from "lucide-react";
+import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw } from "lucide-react";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 
 interface EcoPalBotProps {
@@ -18,6 +18,7 @@ interface Message {
   content: string;
   sender: 'user' | 'ecopal';
   timestamp: Date;
+  isTyping?: boolean;
 }
 
 const sampleQuestions = [
@@ -33,74 +34,146 @@ const sampleQuestions = [
   "Tell me about sustainable agriculture",
 ];
 
-const ecopalResponses: Record<string, string> = {
-  "what is renewable energy": "Renewable energy comes from natural sources that replenish themselves constantly, like sunlight, wind, rain, tides, waves, and geothermal heat. Unlike fossil fuels, renewables don't run out and produce little to no greenhouse gas emissions! 🌱⚡",
-  "how can i reduce my carbon footprint": "Great question! You can reduce your carbon footprint by: using public transport or cycling, switching to LED bulbs, eating less meat, reducing waste, using renewable energy, and conserving water. Every small action counts! 🌍♻️",
-  "what are the benefits of solar energy": "Solar energy is amazing! Benefits include: zero emissions during operation, reduced electricity bills, low maintenance costs, energy independence, and it's inexhaustible. Plus, solar panel costs have dropped by 80% in the last decade! ☀️💰",
-  "how does climate change affect the environment": "Climate change causes rising sea levels, extreme weather events, melting ice caps, ecosystem disruption, and species extinction. But here's the good news - we can combat it through renewable energy, reforestation, and sustainable practices! 🌊🔥❄️",
-  "what are sustainable living practices": "Sustainable living includes: reducing energy consumption, recycling and composting, buying local and organic foods, using eco-friendly products, conserving water, and supporting renewable energy. It's about meeting our needs without compromising future generations! 🌿🏠",
-  "explain wind energy": "Wind energy harnesses the kinetic energy of moving air using wind turbines. It's one of the fastest-growing renewable energy sources! Benefits include: no fuel costs, minimal water usage, land can still be used for farming, and modern turbines are 85% recyclable. 💨🌪️",
-  "what is carbon capture technology": "Carbon capture and storage (CCS) technology captures CO2 emissions from industrial processes and power plants, then stores it underground or uses it for other purposes. It's crucial for achieving net-zero emissions and can reduce emissions by up to 90%! 🏭💨",
-  "how do electric vehicles help": "Electric vehicles (EVs) produce zero direct emissions and are 3-4x more energy efficient than gas cars. They reduce air pollution, lower maintenance costs, and as the grid gets cleaner, EVs become even more environmentally friendly! 🚗⚡",
-  "what are microgrids": "Microgrids are small-scale, localized energy systems that can operate independently or connect to the main grid. They integrate renewable energy sources, energy storage, and smart controls to provide reliable, clean power to communities! 🔌🏘️",
-  "sustainable agriculture": "Sustainable agriculture focuses on producing food while protecting the environment through practices like crop rotation, organic farming, precision agriculture, and reducing pesticide use. It maintains soil health, conserves water, and supports biodiversity! 🌾🚜",
-  "geothermal energy": "Geothermal energy harnesses heat from the Earth's core for electricity and heating. It's available 24/7, has a tiny land footprint, and produces virtually no emissions. Iceland gets 25% of its electricity from geothermal! 🌋♨️",
-  "ocean energy": "Ocean energy includes wave, tidal, and thermal energy conversion. The ocean contains enough energy to power the world several times over! Tidal energy is highly predictable, and wave energy has enormous potential. 🌊⚡",
-  "green hydrogen": "Green hydrogen is produced using renewable energy to split water into hydrogen and oxygen. It can store renewable energy, fuel vehicles, heat homes, and power industry without emissions. It's the key to decarbonizing hard-to-electrify sectors! 💧⚡",
-  "circular economy": "A circular economy eliminates waste by designing products to be reused, repaired, and recycled. Instead of 'take-make-dispose,' it follows 'reduce-reuse-recycle.' This approach can reduce resource consumption by 80% and create millions of jobs! ♻️🔄",
-  "smart cities": "Smart cities use IoT sensors, data analytics, and renewable energy to optimize resource use, reduce emissions, and improve quality of life. Features include smart grids, efficient transportation, green buildings, and waste management systems! 🏙️📱",
-  "default": "That's a fantastic environmental question! As an AI learning companion, I'm designed to help with topics like renewable energy, climate action, sustainable living, green technology, carbon capture, electric vehicles, and much more. This is an open-source project - the community can help expand my knowledge! 🌱🤖"
+// Comprehensive Environmental Knowledge Base
+const comprehensiveKnowledge: Record<string, string[]> = {
+  "renewable energy": [
+    "Renewable energy sources are naturally replenishing and include solar, wind, hydroelectric, geothermal, and biomass. They're crucial for combating climate change because they produce little to no greenhouse gas emissions.",
+    "The renewable energy sector has seen remarkable growth - solar costs have dropped 89% since 2010, and wind costs by 70%. This makes renewables the cheapest source of power in most parts of the world.",
+    "Key benefits include energy security, job creation (the sector employs 13.7 million people worldwide), reduced air pollution, and stable long-term energy costs.",
+    "Challenges include intermittency (solved by energy storage and smart grids), initial capital costs, and the need for supportive policies and infrastructure."
+  ],
+  "climate change": [
+    "Climate change refers to long-term shifts in global temperatures and weather patterns, primarily caused by human activities since the 1800s, particularly burning fossil fuels.",
+    "The greenhouse effect traps heat in Earth's atmosphere. CO2 levels have increased 47% since 1850, leading to a 1.1°C global temperature rise.",
+    "Impacts include rising sea levels (3.3mm/year), extreme weather events, ecosystem disruption, species migration, and threats to food security.",
+    "Solutions involve transitioning to renewable energy, improving energy efficiency, protecting forests, sustainable agriculture, and international cooperation like the Paris Agreement."
+  ],
+  "carbon footprint": [
+    "Your carbon footprint is the total greenhouse gas emissions caused by your activities, measured in CO2 equivalent. The average American produces 16 tons CO2/year.",
+    "Transportation accounts for 29% of US emissions. Walking, cycling, public transport, or electric vehicles can significantly reduce this.",
+    "Home energy use: Switch to LED bulbs (75% less energy), improve insulation, use programmable thermostats, and consider renewable energy.",
+    "Diet matters: Beef production generates 60kg CO2/kg, while plants produce <1kg CO2/kg. Reducing meat consumption can cut emissions by 73%.",
+    "Other actions: Buy local, reduce waste, choose durable products, support renewable energy, and advocate for climate policies."
+  ]
+};
+
+const getAdvancedResponse = (userInput: string, conversationHistory: Message[]): string => {
+  const normalizedInput = userInput.toLowerCase().trim();
+  
+  // Context-aware responses considering conversation history
+  const recentTopics = conversationHistory
+    .slice(-4)
+    .filter(msg => msg.sender === 'user')
+    .map(msg => msg.content.toLowerCase())
+    .join(' ');
+
+  // Enhanced knowledge matching
+  for (const [topic, responses] of Object.entries(comprehensiveKnowledge)) {
+    if (normalizedInput.includes(topic) || normalizedInput.includes(topic.replace(' ', ''))) {
+      // Select response based on conversation depth
+      const responseIndex = Math.min(
+        conversationHistory.filter(msg => 
+          msg.content.toLowerCase().includes(topic)
+        ).length,
+        responses.length - 1
+      );
+      return responses[responseIndex];
+    }
+  }
+
+  // Keyword-based enhanced responses
+  const keywordResponses: Record<string, string> = {
+    "solar": "Solar energy harnesses sunlight through photovoltaic cells or thermal collectors. Modern solar panels are 20-22% efficient and last 25-30 years. With net metering, excess energy can be sold back to the grid. Solar installations have grown 20% annually, making it the fastest-growing energy source globally. ☀️",
+    
+    "wind": "Wind energy captures kinetic energy through turbines. Modern turbines are 180m tall with 80m blades, generating 2-3MW each. Wind farms can be onshore or offshore (which is 40% more efficient). Denmark generates 50% of its electricity from wind, proving its viability at scale. 💨",
+    
+    "electric vehicle": "EVs are 3-4x more energy efficient than gas cars, with 85% efficiency vs 20% for internal combustion engines. They produce zero direct emissions and become cleaner as the grid shifts to renewables. Battery costs have dropped 90% since 2010, making EVs cost-competitive. Norway leads with 80% EV market share. 🚗⚡",
+    
+    "carbon capture": "Carbon capture, utilization, and storage (CCUS) can capture 85-95% of CO2 emissions from industrial sources. Methods include post-combustion, pre-combustion, and direct air capture. While promising, current costs are $100-600/ton CO2. Scale-up and innovation are needed to reach $100/ton for widespread deployment. 🏭",
+    
+    "sustainable agriculture": "Sustainable farming uses practices like crop rotation, cover crops, integrated pest management, and precision agriculture. It can increase yields while reducing water usage by 30%, fertilizer use by 20%, and maintaining soil health. Regenerative agriculture can even sequester carbon, making farms carbon-negative. 🌾",
+    
+    "recycling": "Recycling conserves resources and reduces landfill waste. Aluminum cans save 95% energy vs new production, paper saves 60%, and plastic saves 88%. However, only 9% of plastic ever produced has been recycled. Focus on reducing consumption first, then reusing, then recycling. ♻️",
+    
+    "green hydrogen": "Green hydrogen is produced using renewable electricity to split water (electrolysis). It can decarbonize steel production, shipping, aviation, and serve as long-term energy storage. Current costs are $3-6/kg, but could reach $1-2/kg by 2030 with scale-up. Japan and EU are leading investments. 💧⚡"
+  };
+
+  for (const [keyword, response] of Object.entries(keywordResponses)) {
+    if (normalizedInput.includes(keyword)) {
+      return response;
+    }
+  }
+
+  // Contextual follow-up responses
+  if (recentTopics.includes('renewable') && normalizedInput.includes('how')) {
+    return "To transition to renewables: 1) Install solar panels or choose green energy plans, 2) Support policies like renewable portfolio standards, 3) Invest in renewable energy companies, 4) Advocate for grid modernization and energy storage, 5) Reduce overall energy consumption. Every action accelerates the clean energy transition! 🌱⚡";
+  }
+
+  if (conversationHistory.length > 3) {
+    return `Great follow-up question! Building on our conversation, environmental solutions work best when combined. For example, renewable energy + electric vehicles + sustainable agriculture create synergistic effects. What specific aspect would you like to explore deeper? I'm here to provide detailed, science-based information! 🌍✨`;
+  }
+
+  return "That's an excellent environmental question! I specialize in climate science, renewable energy, sustainable living, green technologies, and ecosystem conservation. I can provide detailed, up-to-date information on any environmental topic. What would you like to explore? 🌱🤖";
 };
 
 export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      content: "Hi there! I'm EcoPal, your AI learning companion for all things green and sustainable! 🌱 Ask me anything about the environment, climate change, renewable energy, or eco-friendly solutions. I'm here to help you learn and make a positive impact!",
-      sender: 'ecopal',
-      timestamp: new Date()
-    }
-  ]);
-  const [inputValue, setInputValue] = useState("");
-
-  const getEcoPalResponse = (userInput: string): string => {
-    const normalizedInput = userInput.toLowerCase().trim();
-    
-    // Check for exact matches first
-    if (ecopalResponses[normalizedInput]) {
-      return ecopalResponses[normalizedInput];
-    }
-    
-    // Enhanced keyword matching for better responses
-    const keywords = [
-      { keys: ['wind', 'turbine'], response: 'explain wind energy' },
-      { keys: ['carbon', 'capture', 'ccs'], response: 'what is carbon capture technology' },
-      { keys: ['electric', 'vehicle', 'ev', 'car'], response: 'how do electric vehicles help' },
-      { keys: ['microgrid', 'smart', 'grid'], response: 'what are microgrids' },
-      { keys: ['agriculture', 'farming', 'food'], response: 'sustainable agriculture' },
-      { keys: ['geothermal', 'ground', 'heat'], response: 'geothermal energy' },
-      { keys: ['ocean', 'wave', 'tidal', 'marine'], response: 'ocean energy' },
-      { keys: ['hydrogen', 'h2', 'fuel', 'cell'], response: 'green hydrogen' },
-      { keys: ['circular', 'economy', 'waste', 'recycle'], response: 'circular economy' },
-      { keys: ['smart', 'city', 'cities', 'urban'], response: 'smart cities' },
-      { keys: ['renewable'], response: 'what is renewable energy' },
-      { keys: ['solar'], response: 'what are the benefits of solar energy' },
-      { keys: ['climate'], response: 'how does climate change affect the environment' },
-      { keys: ['sustainable'], response: 'what are sustainable living practices' },
-      { keys: ['footprint'], response: 'how can i reduce my carbon footprint' }
-    ];
-    
-    for (const { keys, response } of keywords) {
-      if (keys.some(key => normalizedInput.includes(key))) {
-        return ecopalResponses[response] || ecopalResponses.default;
+  const [messages, setMessages] = useState<Message[]>(() => {
+    // Load conversation history from localStorage
+    const savedMessages = localStorage.getItem('ecopal-conversation');
+    if (savedMessages) {
+      try {
+        const parsed = JSON.parse(savedMessages);
+        return parsed.map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }));
+      } catch (e) {
+        console.error('Failed to load conversation history');
       }
     }
     
-    return ecopalResponses.default;
+    return [
+      {
+        id: '1',
+        content: "Hi there! I'm EcoPal, your comprehensive AI environmental companion! 🌱 I can provide detailed, science-based information on climate change, renewable energy, sustainable living, green technologies, and ecosystem conservation. Ask me anything - I learn from our conversation and can reference our previous discussions!",
+        sender: 'ecopal',
+        timestamp: new Date()
+      }
+    ];
+  });
+  
+  const [inputValue, setInputValue] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      const scrollContainer = scrollAreaRef.current.querySelector('[data-radix-scroll-area-viewport]');
+      if (scrollContainer) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+      }
+    }
+  }, [messages]);
+
+  // Save conversation to localStorage whenever messages change
+  useEffect(() => {
+    localStorage.setItem('ecopal-conversation', JSON.stringify(messages));
+  }, [messages]);
+
+  const clearConversation = () => {
+    const initialMessage = {
+      id: '1',
+      content: "Hi there! I'm EcoPal, your comprehensive AI environmental companion! 🌱 I can provide detailed, science-based information on climate change, renewable energy, sustainable living, green technologies, and ecosystem conservation. Ask me anything - I learn from our conversation and can reference our previous discussions!",
+      sender: 'ecopal' as const,
+      timestamp: new Date()
+    };
+    setMessages([initialMessage]);
+    localStorage.removeItem('ecopal-conversation');
   };
 
   const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isTyping) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -110,19 +183,36 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    setInputValue("");
+    setIsTyping(true);
 
-    // Simulate AI thinking delay
+    // Add typing indicator
+    const typingMessage: Message = {
+      id: `typing-${Date.now()}`,
+      content: "EcoPal is thinking...",
+      sender: 'ecopal',
+      timestamp: new Date(),
+      isTyping: true
+    };
+    
     setTimeout(() => {
+      setMessages(prev => [...prev, typingMessage]);
+    }, 300);
+
+    // Generate AI response with conversation context
+    setTimeout(() => {
+      const response = getAdvancedResponse(inputValue, messages);
       const ecopalMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: getEcoPalResponse(inputValue),
+        content: response,
         sender: 'ecopal',
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, ecopalMessage]);
-    }, 1000);
-
-    setInputValue("");
+      
+      // Remove typing indicator and add real response
+      setMessages(prev => prev.filter(msg => !msg.isTyping).concat(ecopalMessage));
+      setIsTyping(false);
+    }, 1500 + Math.random() * 1000); // Realistic typing delay
   };
 
   const handleQuestionClick = (question: string) => {
@@ -130,7 +220,8 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
       handleSendMessage();
     }
   };
@@ -163,12 +254,28 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
               </TabsList>
 
               <TabsContent value="chat" className="flex-1 flex flex-col mt-0">
-                <ScrollArea className="flex-1 border rounded-lg p-4 lg:p-6 mb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <MessageCircle className="w-4 h-4" />
+                    <span>{messages.length - 1} messages</span>
+                  </div>
+                  <Button
+                    onClick={clearConversation}
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Clear Chat
+                  </Button>
+                </div>
+                
+                <ScrollArea ref={scrollAreaRef} className="flex-1 border rounded-lg p-4 lg:p-6 mb-4">
                   <div className="space-y-4 lg:space-y-6">
                     {messages.map((message) => (
                       <div
                         key={message.id}
-                        className={`flex gap-3 lg:gap-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                        className={`flex gap-3 lg:gap-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} ${message.isTyping ? 'animate-pulse' : ''}`}
                       >
                         {message.sender === 'ecopal' && (
                           <div className="flex-shrink-0">
@@ -177,12 +284,22 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                             </div>
                           </div>
                         )}
-                        <Card className={`max-w-[85%] lg:max-w-[80%] ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                        <Card className={`max-w-[85%] lg:max-w-[80%] ${
+                          message.sender === 'user' 
+                            ? 'bg-primary text-primary-foreground' 
+                            : message.isTyping 
+                              ? 'bg-muted/60' 
+                              : 'bg-muted'
+                        }`}>
                           <CardContent className="p-3 lg:p-4">
-                            <p className="text-sm lg:text-base leading-relaxed">{message.content}</p>
-                            <p className="text-xs lg:text-sm opacity-70 mt-2">
-                              {message.timestamp.toLocaleTimeString()}
+                            <p className="text-sm lg:text-base leading-relaxed whitespace-pre-wrap">
+                              {message.content}
                             </p>
+                            {!message.isTyping && (
+                              <p className="text-xs lg:text-sm opacity-70 mt-2">
+                                {message.timestamp.toLocaleTimeString()}
+                              </p>
+                            )}
                           </CardContent>
                         </Card>
                         {message.sender === 'user' && (
@@ -205,8 +322,14 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     className="flex-1 text-base h-12"
+                    disabled={isTyping}
                   />
-                  <Button onClick={handleSendMessage} variant="hero" className="px-4 h-12">
+                  <Button 
+                    onClick={handleSendMessage} 
+                    variant="hero" 
+                    className="px-4 h-12"
+                    disabled={isTyping || !inputValue.trim()}
+                  >
                     <Send className="w-5 h-5" />
                   </Button>
                 </div>
