@@ -148,135 +148,47 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
           </div>
         </DialogHeader>
 
-        {/* Mobile and Desktop Layout */}
-        <div className="flex-1 min-h-0">
-          {/* Desktop Layout - Hidden on mobile */}
-          <div className="hidden lg:flex flex-1 gap-6 min-h-0">
-            {/* Sample Questions Sidebar */}
-            <div className="w-80 space-y-3">
-              <h3 className="font-semibold text-primary flex items-center gap-2">
-                <Lightbulb className="w-4 h-4" />
-                Try asking me:
-              </h3>
-              <ScrollArea className="h-[calc(100%-2rem)]">
-                <div className="space-y-2 pr-4">
-                  {sampleQuestions.map((question, index) => (
-                    <Button
-                      key={index}
-                      variant="outline"
-                      className="w-full text-left h-auto p-3 justify-start text-sm hover:bg-primary/10"
-                      onClick={() => handleQuestionClick(question)}
-                    >
-                      {question}
-                    </Button>
-                  ))}
-                  <Card className="p-3 bg-gradient-success text-white mt-4">
-                    <p className="text-sm">
-                      💡 <strong>Open Source Project:</strong> EcoPal's knowledge base grows with community contributions!
-                    </p>
-                  </Card>
-                  <Card className="p-3 bg-gradient-primary text-white">
-                    <p className="text-sm">
-                      🌍 <strong>Demo Mode:</strong> Experience real-time AI responses on environmental topics.
-                    </p>
-                  </Card>
-                </div>
-              </ScrollArea>
-            </div>
-
-            {/* Chat Area */}
-            <div className="flex-1 flex flex-col">
-              <ScrollArea className="flex-1 border rounded-lg p-4 mb-4">
-                <div className="space-y-4">
-                  {messages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      {message.sender === 'ecopal' && (
-                        <div className="flex-shrink-0">
-                          <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center">
-                            <Bot className="w-4 h-4 text-white" />
-                          </div>
-                        </div>
-                      )}
-                      <Card className={`max-w-[85%] ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                        <CardContent className="p-3">
-                          <p className="text-sm leading-relaxed">{message.content}</p>
-                          <p className="text-xs opacity-70 mt-2">
-                            {message.timestamp.toLocaleTimeString()}
-                          </p>
-                        </CardContent>
-                      </Card>
-                      {message.sender === 'user' && (
-                        <div className="flex-shrink-0">
-                          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                            <User className="w-4 h-4 text-white" />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-
-              {/* Input Area */}
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Ask me anything about the environment..."
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  className="flex-1"
-                />
-                <Button onClick={handleSendMessage} variant="hero" className="px-4">
-                  <Send className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile Layout - Tabbed Interface */}
-          <div className="lg:hidden flex flex-col h-full">
+        {/* Unified Tabbed Layout for All Devices */}
+        <div className="flex-1 min-h-0 flex flex-col">
             <Tabs defaultValue="chat" className="flex-1 flex flex-col">
-              <TabsList className="grid w-full grid-cols-2 mb-4">
-                <TabsTrigger value="chat" className="flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4" />
+              <TabsList className="grid w-full grid-cols-2 mb-6 h-12">
+                <TabsTrigger value="chat" className="flex items-center gap-2 text-base">
+                  <MessageCircle className="w-5 h-5" />
                   Chat
                 </TabsTrigger>
-                <TabsTrigger value="questions" className="flex items-center gap-2">
-                  <Lightbulb className="w-4 h-4" />
+                <TabsTrigger value="questions" className="flex items-center gap-2 text-base">
+                  <Lightbulb className="w-5 h-5" />
                   Questions
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="chat" className="flex-1 flex flex-col mt-0">
-                <ScrollArea className="flex-1 border rounded-lg p-3 mb-4">
-                  <div className="space-y-3">
+                <ScrollArea className="flex-1 border rounded-lg p-4 lg:p-6 mb-4">
+                  <div className="space-y-4 lg:space-y-6">
                     {messages.map((message) => (
                       <div
                         key={message.id}
-                        className={`flex gap-2 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                        className={`flex gap-3 lg:gap-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                       >
                         {message.sender === 'ecopal' && (
                           <div className="flex-shrink-0">
-                            <div className="w-7 h-7 rounded-full bg-gradient-primary flex items-center justify-center">
-                              <Bot className="w-3 h-3 text-white" />
+                            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-primary flex items-center justify-center">
+                              <Bot className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                             </div>
                           </div>
                         )}
-                        <Card className={`max-w-[90%] ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                          <CardContent className="p-3">
-                            <p className="text-sm leading-relaxed">{message.content}</p>
-                            <p className="text-xs opacity-70 mt-1">
+                        <Card className={`max-w-[85%] lg:max-w-[80%] ${message.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                          <CardContent className="p-3 lg:p-4">
+                            <p className="text-sm lg:text-base leading-relaxed">{message.content}</p>
+                            <p className="text-xs lg:text-sm opacity-70 mt-2">
                               {message.timestamp.toLocaleTimeString()}
                             </p>
                           </CardContent>
                         </Card>
                         {message.sender === 'user' && (
                           <div className="flex-shrink-0">
-                            <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center">
-                              <User className="w-3 h-3 text-white" />
+                            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-primary flex items-center justify-center">
+                              <User className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
                             </div>
                           </div>
                         )}
@@ -285,58 +197,61 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                   </div>
                 </ScrollArea>
 
-                {/* Mobile Input Area */}
-                <div className="flex gap-2">
+                {/* Input Area */}
+                <div className="flex gap-3">
                   <Input
-                    placeholder="Ask about the environment..."
+                    placeholder="Ask me anything about the environment..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    className="flex-1 text-base"
+                    className="flex-1 text-base h-12"
                   />
-                  <Button onClick={handleSendMessage} variant="hero" size="sm" className="px-3">
-                    <Send className="w-4 h-4" />
+                  <Button onClick={handleSendMessage} variant="hero" className="px-4 h-12">
+                    <Send className="w-5 h-5" />
                   </Button>
                 </div>
               </TabsContent>
 
               <TabsContent value="questions" className="flex-1 mt-0">
                 <ScrollArea className="h-full">
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-primary flex items-center gap-2 mb-3">
-                      <Lightbulb className="w-4 h-4" />
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-primary flex items-center gap-2 mb-4 text-lg">
+                      <Lightbulb className="w-5 h-5" />
                       Try asking me:
                     </h3>
-                    {sampleQuestions.map((question, index) => (
-                      <Button
-                        key={index}
-                        variant="outline"
-                        className="w-full text-left h-auto p-3 justify-start text-sm hover:bg-primary/10"
-                        onClick={() => {
-                          handleQuestionClick(question);
-                          // Switch to chat tab after selecting question
-                          const chatTab = document.querySelector('[value="chat"]') as HTMLButtonElement;
-                          chatTab?.click();
-                        }}
-                      >
-                        {question}
-                      </Button>
-                    ))}
-                    <Card className="p-3 bg-gradient-success text-white mt-4">
-                      <p className="text-sm">
-                        💡 <strong>Open Source:</strong> EcoPal grows with community contributions!
-                      </p>
-                    </Card>
-                    <Card className="p-3 bg-gradient-primary text-white">
-                      <p className="text-sm">
-                        🌍 <strong>Demo Mode:</strong> Real-time AI environmental responses!
-                      </p>
-                    </Card>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                      {sampleQuestions.map((question, index) => (
+                        <Button
+                          key={index}
+                          variant="outline"
+                          className="w-full text-left h-auto p-4 justify-start text-sm lg:text-base hover:bg-primary/10 min-h-[60px]"
+                          onClick={() => {
+                            handleQuestionClick(question);
+                            // Switch to chat tab after selecting question
+                            const chatTab = document.querySelector('[value="chat"]') as HTMLButtonElement;
+                            chatTab?.click();
+                          }}
+                        >
+                          {question}
+                        </Button>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-6">
+                      <Card className="p-4 bg-gradient-success text-white">
+                        <p className="text-sm lg:text-base">
+                          💡 <strong>Open Source:</strong> EcoPal grows with community contributions!
+                        </p>
+                      </Card>
+                      <Card className="p-4 bg-gradient-primary text-white">
+                        <p className="text-sm lg:text-base">
+                          🌍 <strong>Demo Mode:</strong> Real-time AI environmental responses!
+                        </p>
+                      </Card>
+                    </div>
                   </div>
                 </ScrollArea>
               </TabsContent>
             </Tabs>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
