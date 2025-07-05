@@ -228,84 +228,96 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="w-[95vw] max-w-6xl h-[90vh] max-h-[800px] flex flex-col p-4 sm:p-6">
-        <DialogHeader className="pb-4">
+      <DialogContent className="w-[95vw] max-w-5xl h-[85vh] max-h-[700px] flex flex-col p-0 gap-0">
+        {/* Header */}
+        <DialogHeader className="px-4 sm:px-6 py-4 border-b bg-card/50 backdrop-blur-sm">
           <div className="flex items-center gap-3">
-            <img src={ecopalMascot} alt="EcoPal" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" />
+            <img src={ecopalMascot} alt="EcoPal" className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-primary/20" />
             <div>
-              <DialogTitle className="text-lg sm:text-2xl text-primary">Meet EcoPal</DialogTitle>
-              <p className="text-sm sm:text-base text-muted-foreground">Your AI-powered environmental learning companion</p>
+              <DialogTitle className="text-lg sm:text-xl text-primary font-semibold">Meet EcoPal</DialogTitle>
+              <p className="text-sm text-muted-foreground">Your AI environmental companion</p>
             </div>
           </div>
         </DialogHeader>
 
-        {/* Unified Tabbed Layout for All Devices */}
+        {/* Main Content */}
         <div className="flex-1 min-h-0 flex flex-col">
-            <Tabs defaultValue="chat" className="flex-1 flex flex-col">
-              <TabsList className="grid w-full grid-cols-2 mb-6 h-12">
-                <TabsTrigger value="chat" className="flex items-center gap-2 text-base">
-                  <MessageCircle className="w-5 h-5" />
+          <Tabs defaultValue="chat" className="flex-1 flex flex-col">
+            {/* Tab Navigation */}
+            <div className="px-4 sm:px-6 pt-4 pb-2 border-b bg-background/95">
+              <TabsList className="grid w-full grid-cols-2 h-11 bg-muted/50">
+                <TabsTrigger value="chat" className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-background">
+                  <MessageCircle className="w-4 h-4" />
                   Chat
                 </TabsTrigger>
-                <TabsTrigger value="questions" className="flex items-center gap-2 text-base">
-                  <Lightbulb className="w-5 h-5" />
+                <TabsTrigger value="questions" className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-background">
+                  <Lightbulb className="w-4 h-4" />
                   Questions
                 </TabsTrigger>
               </TabsList>
+            </div>
 
-              <TabsContent value="chat" className="flex-1 flex flex-col mt-0">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MessageCircle className="w-4 h-4" />
-                    <span>{messages.length - 1} messages</span>
-                  </div>
-                  <Button
-                    onClick={clearConversation}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-2 text-sm"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    Clear Chat
-                  </Button>
+            {/* Chat Tab */}
+            <TabsContent value="chat" className="flex-1 flex flex-col mt-0 px-4 sm:px-6 pb-4">
+              {/* Chat Header */}
+              <div className="flex items-center justify-between py-3">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>{messages.length - 1} messages</span>
                 </div>
-                
-                <ScrollArea ref={scrollAreaRef} className="flex-1 border rounded-lg p-4 lg:p-6 mb-4">
-                  <div className="space-y-4 lg:space-y-6">
+                <Button
+                  onClick={clearConversation}
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 mr-1" />
+                  Clear
+                </Button>
+              </div>
+              
+              {/* Messages Container */}
+              <div className="flex-1 min-h-0 flex flex-col">
+                <ScrollArea ref={scrollAreaRef} className="flex-1 rounded-lg border bg-card/30 backdrop-blur-sm">
+                  <div className="p-4 space-y-4">
                     {messages.map((message) => (
                       <div
                         key={message.id}
-                        className={`flex gap-3 lg:gap-4 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} ${message.isTyping ? 'animate-pulse' : ''}`}
+                        className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} ${message.isTyping ? 'animate-pulse' : ''}`}
                       >
                         {message.sender === 'ecopal' && (
-                          <div className="flex-shrink-0">
-                            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-primary flex items-center justify-center">
-                              <Bot className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                          <div className="flex-shrink-0 mt-1">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center shadow-sm">
+                              <Bot className="w-4 h-4 text-white" />
                             </div>
                           </div>
                         )}
-                        <Card className={`max-w-[85%] lg:max-w-[80%] ${
-                          message.sender === 'user' 
-                            ? 'bg-primary text-primary-foreground' 
-                            : message.isTyping 
-                              ? 'bg-muted/60' 
-                              : 'bg-muted'
-                        }`}>
-                          <CardContent className="p-3 lg:p-4">
-                            <p className="text-sm lg:text-base leading-relaxed whitespace-pre-wrap">
-                              {message.content}
-                            </p>
-                            {!message.isTyping && (
-                              <p className="text-xs lg:text-sm opacity-70 mt-2">
-                                {message.timestamp.toLocaleTimeString()}
+                        
+                        <div className={`max-w-[80%] ${message.sender === 'user' ? 'order-first' : ''}`}>
+                          <Card className={`${
+                            message.sender === 'user' 
+                              ? 'bg-primary text-primary-foreground shadow-md' 
+                              : message.isTyping 
+                                ? 'bg-muted/60 shadow-sm' 
+                                : 'bg-background shadow-sm border-muted'
+                          }`}>
+                            <CardContent className="p-3">
+                              <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                                {message.content}
                               </p>
-                            )}
-                          </CardContent>
-                        </Card>
+                              {!message.isTyping && (
+                                <p className="text-xs opacity-60 mt-2 text-right">
+                                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </p>
+                              )}
+                            </CardContent>
+                          </Card>
+                        </div>
+
                         {message.sender === 'user' && (
-                          <div className="flex-shrink-0">
-                            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-primary flex items-center justify-center">
-                              <User className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+                          <div className="flex-shrink-0 mt-1">
+                            <div className="w-7 h-7 rounded-full bg-gradient-to-r from-secondary to-secondary/80 flex items-center justify-center shadow-sm">
+                              <User className="w-4 h-4 text-secondary-foreground" />
                             </div>
                           </div>
                         )}
@@ -314,67 +326,81 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                   </div>
                 </ScrollArea>
 
-                {/* Input Area */}
-                <div className="flex gap-3">
-                  <Input
-                    placeholder="Ask me anything about the environment..."
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    className="flex-1 text-base h-12"
-                    disabled={isTyping}
-                  />
-                  <Button 
-                    onClick={handleSendMessage} 
-                    variant="hero" 
-                    className="px-4 h-12"
-                    disabled={isTyping || !inputValue.trim()}
-                  >
-                    <Send className="w-5 h-5" />
-                  </Button>
+                {/* Input Area - Fixed at Bottom */}
+                <div className="pt-4 space-y-2">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Ask me anything about the environment..."
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      className="flex-1 h-11 bg-background/50 backdrop-blur-sm border-muted focus:border-primary"
+                      disabled={isTyping}
+                    />
+                    <Button 
+                      onClick={handleSendMessage} 
+                      size="sm"
+                      className="h-11 px-4 bg-primary hover:bg-primary/90 shadow-md"
+                      disabled={isTyping || !inputValue.trim()}
+                    >
+                      <Send className="w-4 h-4" />
+                    </Button>
+                  </div>
+                  {isTyping && (
+                    <p className="text-xs text-muted-foreground text-center animate-pulse">
+                      EcoPal is thinking...
+                    </p>
+                  )}
                 </div>
-              </TabsContent>
+              </div>
+            </TabsContent>
 
-              <TabsContent value="questions" className="flex-1 mt-0">
-                <ScrollArea className="h-full">
-                  <div className="space-y-3">
-                    <h3 className="font-semibold text-primary flex items-center gap-2 mb-4 text-lg">
-                      <Lightbulb className="w-5 h-5" />
-                      Try asking me:
-                    </h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {/* Questions Tab */}
+            <TabsContent value="questions" className="flex-1 mt-0 px-4 sm:px-6 pb-4">
+              <div className="h-full flex flex-col">
+                <div className="py-3">
+                  <h3 className="font-semibold text-primary flex items-center gap-2 text-base">
+                    <Lightbulb className="w-4 h-4" />
+                    Try asking me:
+                  </h3>
+                </div>
+                
+                <ScrollArea className="flex-1">
+                  <div className="space-y-3 pr-2">
+                    <div className="grid gap-2">
                       {sampleQuestions.map((question, index) => (
                         <Button
                           key={index}
                           variant="outline"
-                          className="w-full text-left h-auto p-4 justify-start text-sm lg:text-base hover:bg-primary/10 min-h-[60px]"
+                          className="w-full text-left h-auto p-3 justify-start text-sm hover:bg-primary/5 hover:border-primary/20 min-h-[50px] transition-colors"
                           onClick={() => {
                             handleQuestionClick(question);
-                            // Switch to chat tab after selecting question
                             const chatTab = document.querySelector('[value="chat"]') as HTMLButtonElement;
                             chatTab?.click();
                           }}
                         >
-                          {question}
+                          <span className="text-left break-words">{question}</span>
                         </Button>
                       ))}
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-6">
-                      <Card className="p-4 bg-gradient-success text-white">
-                        <p className="text-sm lg:text-base">
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-4 border-t">
+                      <Card className="p-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
+                        <p className="text-sm">
                           💡 <strong>Open Source:</strong> EcoPal grows with community contributions!
                         </p>
                       </Card>
-                      <Card className="p-4 bg-gradient-primary text-white">
-                        <p className="text-sm lg:text-base">
+                      <Card className="p-3 bg-gradient-to-r from-primary to-primary/80 text-white shadow-md">
+                        <p className="text-sm">
                           🌍 <strong>Demo Mode:</strong> Real-time AI environmental responses!
                         </p>
                       </Card>
                     </div>
                   </div>
                 </ScrollArea>
-              </TabsContent>
-            </Tabs>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </DialogContent>
     </Dialog>
