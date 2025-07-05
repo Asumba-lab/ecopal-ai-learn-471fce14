@@ -72,7 +72,7 @@ export const HeroSection = () => {
                 size="xl"
                 onClick={() => setIsBotOpen(true)}
               >
-                🎮 Play Demo
+                🤖 EcoPal AI Companion
               </Button>
             </div>
             

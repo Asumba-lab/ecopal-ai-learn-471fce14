@@ -104,9 +104,8 @@ export const FeaturesSection = () => {
                   🤖 Ecopal AI Companion
                 </Button>
                 <Button 
-                  variant="gamified" 
+                  variant="success" 
                   size="xl" 
-                  className="bg-green-600 text-white hover:bg-green-700 hover:border-green-700 shadow-soft"
                   onClick={() => window.location.href = '/curriculum'}
                 >
                   📚 Explore Curriculum
