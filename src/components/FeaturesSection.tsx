@@ -97,11 +97,10 @@ export const FeaturesSection = () => {
                   size="xl" 
                   className="bg-white text-primary hover:bg-white/90"
                   onClick={() => {
-                    const ctaSection = document.querySelector('#cta-section');
-                    ctaSection?.scrollIntoView({ behavior: 'smooth' });
+                    window.open('https://www.ecosia.org/', '_blank');
                   }}
                 >
-                  🤖 Ecopal AI Companion
+                  Ecosia
                 </Button>
                 <Button 
                   variant="success" 
