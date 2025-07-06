@@ -1,10 +1,10 @@
 # EcoPal - AI-Powered Sustainability Education Platform
 
-Transform your environmental knowledge through AI-powered microlearning and gamified challenges. Master sustainability, build eco-villages, track your carbon footprint, and compete with friends to save the planet!
+🌍 **Learn Green, Play Smart** - Transform your environmental knowledge through AI-powered microlearning and gamified challenges. Master sustainability, build eco-villages, track your carbon footprint, and compete with friends to save the planet!
 
 ## 🌱 About EcoPal
 
-EcoPal is an innovative educational platform that combines artificial intelligence with gamification to make sustainability learning engaging, effective, and fun. Whether you're a beginner or looking to deepen your environmental knowledge, EcoPal adapts to your learning style and pace.
+EcoPal is an innovative educational platform that combines artificial intelligence with gamification to make sustainability learning engaging, effective, and fun. With an interactive accordion-based learning hub, AI-powered companion, and real-world challenges, EcoPal adapts to your learning style and pace while making environmental education accessible and enjoyable.
 
 ## ✨ Key Features
 
@@ -28,13 +28,19 @@ EcoPal is an innovative educational platform that combines artificial intelligen
 - **Team Challenges**: Collaborate with friends on sustainability projects
 - **Achievement System**: Earn badges, certificates, and skill recognitions
 
-### 📱 Comprehensive Topics
-- **Climate Change**: Understanding causes, effects, and solutions
-- **Renewable Energy**: Solar, wind, and sustainable energy systems
-- **Water Conservation**: Efficient water use and management strategies
-- **Circular Economy**: Waste reduction and sustainable business models
-- **Carbon Capture**: Technologies and methods for carbon reduction
-- **Sustainable Living**: Practical tips for eco-friendly lifestyle choices
+### 🎯 Interactive Learning Hub
+- **Accordion-Based Exploration**: Click to instantly expand and explore detailed topic content
+- **Comprehensive Coverage**: Six core environmental topics with detailed learning areas
+- **Quick Access**: No navigation delays - all content accessible with one click
+- **Progressive Learning**: From overview to detailed courses for deeper exploration
+
+### 📚 Current Learning Topics
+- **Climate Change Fundamentals**: Greenhouse effects, temperature trends, and ecosystem impacts
+- **Renewable Energy Solutions**: Solar, wind, hydroelectric, and emerging technologies  
+- **Carbon Capture & Sequestration**: Direct air capture, forest storage, and industrial solutions
+- **Circular Economy**: Design for recyclability, industrial symbiosis, and sharing economy
+- **Water Conservation**: Rainwater harvesting, smart irrigation, and watershed protection
+- **Sustainable Living**: Energy-efficient homes, transportation, and zero-waste lifestyle
 
 ## 🚀 Getting Started
 
@@ -43,6 +49,27 @@ EcoPal is an innovative educational platform that combines artificial intelligen
 3. **Take Challenges**: Engage with gamified content and track your progress
 4. **Join Community**: Connect with other learners and participate in competitions
 5. **Apply Knowledge**: Use insights to make real-world environmental impact
+
+## 🏗️ App Structure
+
+### Main Pages
+- **Homepage (/)**: Hero section with EcoPal introduction and feature highlights
+- **Learning Hub (/learning)**: Interactive accordion-based topic exploration
+- **Curriculum (/curriculum)**: Structured learning paths and course organization
+- **Topic Pages**: Detailed content for each environmental subject
+  - Climate Change (`/topics/climate-change`)
+  - Renewable Energy (`/topics/renewable-energy`)
+  - Carbon Capture (`/topics/carbon-capture`)
+  - Circular Economy (`/topics/circular-economy`)
+  - Water Conservation (`/topics/water-conservation`)
+  - Sustainable Living (`/topics/sustainable-living`)
+
+### Key Components
+- **EcoPal AI Bot**: Interactive AI companion for environmental Q&A
+- **Hero Section**: Engaging landing experience with progress tracking
+- **Features Section**: Showcase of platform capabilities
+- **Navigation**: Responsive navigation with back-to-landing functionality
+- **Gamification Elements**: Progress bars, achievements, and interactive challenges
 
 ## 📊 Impact Statistics
 
