@@ -131,8 +131,7 @@ export const HeroSection = () => {
                     variant="success" 
                     className="w-full"
                     onClick={() => {
-                      const ctaSection = document.querySelector('#cta-section');
-                      ctaSection?.scrollIntoView({ behavior: 'smooth' });
+                      window.location.href = '/topics/sustainable-living';
                     }}
                   >
                     Continue Challenge
