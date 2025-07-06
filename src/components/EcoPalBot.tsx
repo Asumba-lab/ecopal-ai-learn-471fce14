@@ -228,7 +228,7 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="w-[95vw] max-w-5xl h-[85vh] max-h-[700px] flex flex-col p-0 gap-0">
+      <DialogContent className="w-[90vw] max-w-4xl h-[80vh] max-h-[600px] flex flex-col p-0 gap-0 overflow-hidden">
         {/* Header */}
         <DialogHeader className="px-4 sm:px-6 py-4 border-b bg-card/50 backdrop-blur-sm">
           <div className="flex items-center gap-3">
@@ -258,9 +258,9 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
             </div>
 
             {/* Chat Tab */}
-            <TabsContent value="chat" className="flex-1 flex flex-col mt-0 px-4 sm:px-6 pb-4">
+            <TabsContent value="chat" className="flex-1 flex flex-col mt-0 px-4 sm:px-6 pb-4 min-h-0">
               {/* Chat Header */}
-              <div className="flex items-center justify-between py-3">
+              <div className="flex items-center justify-between py-2 flex-shrink-0">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <MessageCircle className="w-3.5 h-3.5" />
                   <span>{messages.length - 1} messages</span>
@@ -269,7 +269,7 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                   onClick={clearConversation}
                   variant="ghost"
                   size="sm"
-                  className="h-8 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
+                  className="h-7 px-2 text-xs hover:bg-destructive/10 hover:text-destructive"
                 >
                   <RotateCcw className="w-3.5 h-3.5 mr-1" />
                   Clear
@@ -278,22 +278,22 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
               
               {/* Messages Container */}
               <div className="flex-1 min-h-0 flex flex-col">
-                <ScrollArea ref={scrollAreaRef} className="flex-1 rounded-lg border bg-card/30 backdrop-blur-sm">
-                  <div className="p-4 space-y-4">
+                <ScrollArea ref={scrollAreaRef} className="flex-1 rounded-lg border bg-card/30 backdrop-blur-sm min-h-0">
+                  <div className="p-3 space-y-3">
                     {messages.map((message) => (
                       <div
                         key={message.id}
-                        className={`flex gap-3 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} ${message.isTyping ? 'animate-pulse' : ''}`}
+                        className={`flex gap-2 ${message.sender === 'user' ? 'justify-end' : 'justify-start'} ${message.isTyping ? 'animate-pulse' : ''}`}
                       >
                         {message.sender === 'ecopal' && (
                           <div className="flex-shrink-0 mt-1">
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center shadow-sm">
-                              <Bot className="w-4 h-4 text-white" />
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-primary to-primary/80 flex items-center justify-center shadow-sm">
+                              <Bot className="w-3 h-3 text-white" />
                             </div>
                           </div>
                         )}
                         
-                        <div className={`max-w-[80%] ${message.sender === 'user' ? 'order-first' : ''}`}>
+                        <div className={`max-w-[75%] ${message.sender === 'user' ? 'order-first' : ''}`}>
                           <Card className={`${
                             message.sender === 'user' 
                               ? 'bg-primary text-primary-foreground shadow-md' 
@@ -301,12 +301,12 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                                 ? 'bg-muted/60 shadow-sm' 
                                 : 'bg-background shadow-sm border-muted'
                           }`}>
-                            <CardContent className="p-3">
-                              <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                            <CardContent className="p-2.5">
+                              <p className="text-xs leading-relaxed whitespace-pre-wrap break-words">
                                 {message.content}
                               </p>
                               {!message.isTyping && (
-                                <p className="text-xs opacity-60 mt-2 text-right">
+                                <p className="text-xs opacity-50 mt-1.5 text-right">
                                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </p>
                               )}
@@ -316,8 +316,8 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
 
                         {message.sender === 'user' && (
                           <div className="flex-shrink-0 mt-1">
-                            <div className="w-7 h-7 rounded-full bg-gradient-to-r from-secondary to-secondary/80 flex items-center justify-center shadow-sm">
-                              <User className="w-4 h-4 text-secondary-foreground" />
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-r from-secondary to-secondary/80 flex items-center justify-center shadow-sm">
+                              <User className="w-3 h-3 text-secondary-foreground" />
                             </div>
                           </div>
                         )}
@@ -327,23 +327,23 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                 </ScrollArea>
 
                 {/* Input Area - Fixed at Bottom */}
-                <div className="pt-4 space-y-2">
+                <div className="pt-3 space-y-2 flex-shrink-0">
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Ask me anything about the environment..."
+                      placeholder="Ask me about the environment..."
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      className="flex-1 h-11 bg-background/50 backdrop-blur-sm border-muted focus:border-primary"
+                      className="flex-1 h-9 bg-background/50 backdrop-blur-sm border-muted focus:border-primary text-sm"
                       disabled={isTyping}
                     />
                     <Button 
                       onClick={handleSendMessage} 
                       size="sm"
-                      className="h-11 px-4 bg-primary hover:bg-primary/90 shadow-md"
+                      className="h-9 px-3 bg-primary hover:bg-primary/90 shadow-md"
                       disabled={isTyping || !inputValue.trim()}
                     >
-                      <Send className="w-4 h-4" />
+                      <Send className="w-3.5 h-3.5" />
                     </Button>
                   </div>
                   {isTyping && (
@@ -356,23 +356,23 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
             </TabsContent>
 
             {/* Questions Tab */}
-            <TabsContent value="questions" className="flex-1 mt-0 px-4 sm:px-6 pb-4">
-              <div className="h-full flex flex-col">
-                <div className="py-3">
-                  <h3 className="font-semibold text-primary flex items-center gap-2 text-base">
+            <TabsContent value="questions" className="flex-1 mt-0 px-4 sm:px-6 pb-4 min-h-0">
+              <div className="h-full flex flex-col min-h-0">
+                <div className="py-2 flex-shrink-0">
+                  <h3 className="font-semibold text-primary flex items-center gap-2 text-sm">
                     <Lightbulb className="w-4 h-4" />
                     Try asking me:
                   </h3>
                 </div>
                 
-                <ScrollArea className="flex-1">
-                  <div className="space-y-3 pr-2">
+                <ScrollArea className="flex-1 min-h-0">
+                  <div className="space-y-2 pr-2">
                     <div className="grid gap-2">
-                      {sampleQuestions.map((question, index) => (
+                      {sampleQuestions.slice(0, 8).map((question, index) => (
                         <Button
                           key={index}
                           variant="outline"
-                          className="w-full text-left h-auto p-3 justify-start text-sm hover:bg-primary/5 hover:border-primary/20 min-h-[50px] transition-colors"
+                          className="w-full text-left h-auto p-2.5 justify-start text-xs hover:bg-primary/5 hover:border-primary/20 min-h-[40px] transition-colors"
                           onClick={() => {
                             handleQuestionClick(question);
                             const chatTab = document.querySelector('[value="chat"]') as HTMLButtonElement;
@@ -384,14 +384,14 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                       ))}
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-6 pt-4 border-t">
-                      <Card className="p-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
-                        <p className="text-sm">
+                    <div className="grid grid-cols-1 gap-2 mt-4 pt-3 border-t">
+                      <Card className="p-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md">
+                        <p className="text-xs">
                           💡 <strong>Open Source:</strong> EcoPal grows with community contributions!
                         </p>
                       </Card>
-                      <Card className="p-3 bg-gradient-to-r from-primary to-primary/80 text-white shadow-md">
-                        <p className="text-sm">
+                      <Card className="p-2.5 bg-gradient-to-r from-primary to-primary/80 text-white shadow-md">
+                        <p className="text-xs">
                           🌍 <strong>Demo Mode:</strong> Real-time AI environmental responses!
                         </p>
                       </Card>
