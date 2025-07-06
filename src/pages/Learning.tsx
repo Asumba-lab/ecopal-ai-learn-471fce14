@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Leaf, Zap, Recycle, Globe, TreePine, Droplets } from "lucide-react";
@@ -91,49 +92,61 @@ const Learning = () => {
         </div>
       </section>
 
-      {/* Topics Grid */}
+      {/* Topics Accordion */}
       <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <Accordion type="single" collapsible className="space-y-4">
             {environmentalTopics.map((topic, index) => (
-              <Card key={index} className="hover:shadow-glow transition-all duration-300 group">
-                <CardHeader>
-                  <div className="text-primary mb-4 group-hover:scale-110 transition-transform">
-                    {topic.icon}
+              <AccordionItem key={index} value={`topic-${index}`} className="border rounded-lg shadow-sm hover:shadow-glow transition-all duration-300">
+                <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                  <div className="flex items-center gap-4 text-left">
+                    <div className="text-primary flex-shrink-0">
+                      {topic.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold">{topic.title}</h3>
+                      <p className="text-muted-foreground text-sm mt-1">{topic.description}</p>
+                    </div>
                   </div>
-                  <CardTitle className="text-xl">{topic.title}</CardTitle>
-                  <p className="text-muted-foreground">{topic.description}</p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {topic.content.map((item, itemIndex) => (
-                      <li key={itemIndex} className="flex items-start gap-2 text-sm">
-                        <span className="text-primary mt-1">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button 
-                    variant="outline" 
-                    className="w-full mt-6"
-                    onClick={() => {
-                      const topicRoutes = {
-                        0: '/topics/climate-change',
-                        1: '/topics/renewable-energy', 
-                        2: '/topics/carbon-capture',
-                        3: '/topics/circular-economy',
-                        4: '/topics/water-conservation',
-                        5: '/topics/sustainable-living'
-                      };
-                      window.location.href = topicRoutes[index as keyof typeof topicRoutes];
-                    }}
-                  >
-                    Explore Topic
-                  </Button>
-                </CardContent>
-              </Card>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6">
+                  <div className="pt-4 border-t">
+                    <h4 className="font-medium mb-4 text-primary">Key Learning Areas:</h4>
+                    <ul className="space-y-3">
+                      {topic.content.map((item, itemIndex) => (
+                        <li key={itemIndex} className="flex items-start gap-3">
+                          <span className="text-primary mt-1 flex-shrink-0">🌟</span>
+                          <span className="text-foreground">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Ready to dive deeper into this topic?
+                      </p>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => {
+                          const topicRoutes = {
+                            0: '/topics/climate-change',
+                            1: '/topics/renewable-energy', 
+                            2: '/topics/carbon-capture',
+                            3: '/topics/circular-economy',
+                            4: '/topics/water-conservation',
+                            5: '/topics/sustainable-living'
+                          };
+                          window.location.href = topicRoutes[index as keyof typeof topicRoutes];
+                        }}
+                      >
+                        View Detailed Course →
+                      </Button>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </div>
       </section>
 
