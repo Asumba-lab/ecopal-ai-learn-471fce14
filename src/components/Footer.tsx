@@ -5,10 +5,10 @@ import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 
 export const Footer = () => {
   const socialLinks = [
-    { name: "Twitter", icon: "🐦", url: "https://twitter.com" },
-    { name: "LinkedIn", icon: "💼", url: "https://linkedin.com" },
-    { name: "Discord", icon: "💬", url: "https://discord.com" },
-    { name: "YouTube", icon: "📺", url: "https://youtube.com" }
+    { name: "Twitter", icon: "🐦", url: "https://twitter.com/ABORNY2023" },
+    { name: "LinkedIn", icon: "💼", url: "https://linkedin.com/company/unep" },
+    { name: "Discord", icon: "💬", url: "https://discord.gg/climate" },
+    { name: "YouTube", icon: "📺", url: "https://youtube.com/@OurChangingClimate" }
   ];
 
   const quickLinks = [
