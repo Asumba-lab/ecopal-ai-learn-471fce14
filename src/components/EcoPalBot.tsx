@@ -68,242 +68,344 @@ const questionCategories = [
   }
 ];
 
-// Comprehensive Environmental Knowledge Base - Vastly Expanded
+// Comprehensive Environmental Knowledge Base - Multi-Source Expert Knowledge
+// Sources: IPCC Reports, NASA Climate, NOAA, EPA, UN Environment, Nature Journal, Science Daily, 
+// World Resources Institute, Carbon Brief, Our World in Data, National Geographic, WWF, IUCN
 const comprehensiveKnowledge: Record<string, string[]> = {
-  // RENEWABLE ENERGY
+  // ========================
+  // RENEWABLE ENERGY (Sources: IRENA, IEA, NREL, MIT Energy Initiative)
+  // ========================
   "renewable energy": [
-    "Renewable energy comes from naturally replenishing sources: solar, wind, hydro, geothermal, and biomass. Unlike fossil fuels, they produce minimal greenhouse gases and never run out. 🌱",
-    "Solar costs dropped 89% since 2010, wind by 70%. Renewables are now the cheapest power source in most regions, generating 30% of global electricity. ⚡",
-    "The sector employs 13.7 million people worldwide and growing. Key benefits: energy independence, stable costs, cleaner air, and climate protection. 🌍",
-    "Challenges include intermittency (solved by batteries + smart grids), grid integration, and upfront costs. But storage costs fell 90% in a decade! 🔋"
+    "Renewable energy comes from naturally replenishing sources: solar, wind, hydro, geothermal, and biomass. Unlike fossil fuels, they produce minimal greenhouse gases and never run out. (Source: U.S. Energy Information Administration) 🌱",
+    "Solar costs dropped 89% since 2010, wind by 70%. Renewables are now the cheapest power source in most regions, generating 30% of global electricity in 2023. (Source: IRENA Renewable Power Generation Costs 2023) ⚡",
+    "The clean energy sector employs 14.7 million people worldwide (2023), expected to reach 42 million by 2050. Key benefits: energy independence, stable costs, cleaner air, and climate protection. (Source: IEA World Energy Outlook) 🌍",
+    "Challenges include intermittency (solved by batteries + smart grids), grid integration, and upfront costs. But battery storage costs fell 90% in a decade! Global renewable capacity additions reached 507 GW in 2023. (Source: Bloomberg NEF) 🔋"
   ],
   "solar energy": [
-    "Solar panels use photovoltaic cells to convert sunlight directly into electricity. Modern panels achieve 20-22% efficiency and last 25-30 years with minimal maintenance. ☀️",
-    "Types include rooftop residential (5-10kW), commercial (100kW-1MW), and utility-scale farms (100MW+). Solar thermal uses mirrors to concentrate heat for steam turbines. 🏭",
-    "Net metering lets you sell excess energy back to the grid. With battery storage, you can achieve energy independence and even power through blackouts. 🔋",
-    "Solar works everywhere—Germany, not known for sunshine, gets 10% of its electricity from solar. Costs: $2.50-3.50/watt installed, payback in 6-10 years. 💰"
+    "Solar panels use photovoltaic cells to convert sunlight directly into electricity through the photoelectric effect. Modern monocrystalline panels achieve 20-23% efficiency and last 25-30 years with minimal maintenance. (Source: NREL Solar Efficiency Chart 2024) ☀️",
+    "Types include rooftop residential (5-10kW), commercial (100kW-1MW), and utility-scale farms (100MW+). Concentrated Solar Power (CSP) uses mirrors to focus sunlight for thermal energy storage. (Source: DOE Solar Energy Technologies Office) 🏭",
+    "Net metering lets you sell excess energy back to the grid. With battery storage, you can achieve energy independence. Solar + storage systems can provide 24/7 clean power. (Source: Solar Energy Industries Association) 🔋",
+    "Solar works globally—Germany, with limited sunshine, gets 12% of electricity from solar. Global solar capacity reached 1,419 GW in 2023. Costs: $0.03-0.05/kWh for utility-scale—cheaper than coal! (Source: IEA Renewables 2024) 💰"
   ],
   "wind energy": [
-    "Wind turbines convert kinetic energy from moving air into electricity. Modern turbines stand 180m tall with 80m blades, generating 2-8MW each. 💨",
-    "Onshore wind is mature and cheap ($30-40/MWh). Offshore wind is 40% more efficient due to stronger, consistent ocean winds, though costlier. 🌊",
-    "Denmark leads with 50% wind electricity, followed by Ireland (33%) and Germany. Wind employs 1.3 million people globally. 👷",
-    "Wildlife concerns are addressed through careful siting, radar systems to stop turbines during bird migrations, and painted blades (70% fewer bird deaths). 🦅"
+    "Wind turbines convert kinetic energy from moving air into electricity through electromagnetic induction. Modern onshore turbines stand 120-180m tall with 50-80m blades, generating 3-6MW each. (Source: WindEurope) 💨",
+    "Offshore wind is 40% more efficient due to stronger, consistent ocean winds. The world's largest offshore turbine (Vestas V236) generates 15MW—enough for 20,000 homes! (Source: Global Wind Energy Council 2024) 🌊",
+    "Denmark leads with 55% wind electricity (2023), followed by Ireland (36%), UK (29%), and Germany. Wind employs 1.4 million people globally. Global capacity: 1,021 GW. (Source: IRENA Statistics 2024) 👷",
+    "Wildlife concerns are addressed through careful siting, radar systems to stop turbines during bird migrations, and painted blades (70-80% fewer bird deaths). Properly sited wind farms have minimal ecological impact. (Source: Journal of Applied Ecology) 🦅"
   ],
   "hydroelectric": [
-    "Hydropower is the largest renewable source (16% of global electricity), using flowing water through turbines. It's highly efficient at 90%+. 💧",
-    "Types: reservoir dams (store water), run-of-river (minimal storage), pumped storage (batteries using water). Norway gets 95% power from hydro! 🇳🇴",
-    "New tech includes small modular hydro, in-pipe turbines (water mains), and tidal/wave energy that's emerging for coastal areas. 🌊",
-    "Environmental trade-offs exist—dams affect fish migration and ecosystems—but fish ladders, environmental flows, and careful planning minimize impact. 🐟"
+    "Hydropower is the largest renewable source (15% of global electricity, 1,392 GW capacity), using flowing water through turbines. It's highly efficient at 90%+ conversion rate. (Source: International Hydropower Association 2024) 💧",
+    "Types: conventional dams (store water), run-of-river (minimal storage), pumped hydro storage (world's largest battery, 94% of global storage). Norway gets 95% of power from hydro! (Source: IEA Hydropower) 🇳🇴",
+    "New technologies: small modular hydro (<10MW), in-pipe turbines (water mains generate power), marine energy (tidal, wave, OTEC) is emerging for coastal areas. (Source: NREL Marine Energy) 🌊",
+    "Environmental considerations—dams affect fish migration and river ecosystems—but modern solutions include fish ladders, environmental flows, and run-of-river designs that minimize impact. (Source: The Nature Conservancy) 🐟"
   ],
   "geothermal": [
-    "Geothermal taps Earth's internal heat from volcanic activity, hot springs, or deep drilling. It provides reliable 24/7 baseload power. 🌋",
-    "Iceland gets 70% of energy from geothermal! Other leaders: Kenya (47%), El Salvador, New Zealand. Global capacity: 16GW and growing. 🇮🇸",
-    "Enhanced Geothermal Systems (EGS) can work anywhere by fracturing hot dry rock. This could unlock 100x more potential than today. 🔥",
-    "Uses beyond electricity: district heating, greenhouses, aquaculture, food drying. Reykjavik heats 95% of buildings geothermally. 🏠"
+    "Geothermal taps Earth's internal heat (temperatures reach 6,000°C at the core) from volcanic activity, hot springs, or deep drilling. Provides reliable 24/7 baseload power with 90%+ capacity factor. (Source: Geothermal Energy Association) 🌋",
+    "Iceland gets 66% of primary energy from geothermal! Other leaders: Kenya (47% electricity), Philippines (27%), El Salvador (26%). Global capacity: 16.1 GW, potential: 200+ GW. (Source: ThinkGeoEnergy 2024) 🇮🇸",
+    "Enhanced Geothermal Systems (EGS) can work anywhere by fracturing hot dry rock 3-10km deep. This could unlock 100x more potential than conventional geothermal—enough to power entire countries. (Source: DOE FORGE Project) 🔥",
+    "Beyond electricity: district heating, greenhouses, aquaculture, food drying, lithium extraction. Reykjavik heats 95% of buildings geothermally. Geothermal heat pumps work everywhere for building heating/cooling. (Source: EGEC) 🏠"
   ],
   "green hydrogen": [
-    "Green hydrogen is made by splitting water using renewable electricity (electrolysis). It produces zero emissions and stores energy long-term. ⚡💧",
-    "Applications: steel production (replacing coal), shipping, aviation, seasonal energy storage, fertilizer production. Hard-to-decarbonize sectors. 🚢✈️",
-    "Current cost: $4-6/kg, projected to hit $1-2/kg by 2030 with scale. The EU plans 40GW electrolyzer capacity by 2030. 📉",
-    "Blue hydrogen (from natural gas with carbon capture) is a bridge technology, but green hydrogen is the long-term goal for true net-zero. 🎯"
+    "Green hydrogen is produced by splitting water molecules (H₂O → H₂ + O₂) using renewable electricity through electrolysis. It produces zero emissions and can store energy for months. (Source: IRENA Green Hydrogen Report) ⚡💧",
+    "Applications for hard-to-decarbonize sectors: steel production (replacing coking coal), shipping (ammonia fuel), aviation (synthetic fuels), long-duration energy storage, and fertilizer production. (Source: IEA Hydrogen) 🚢✈️",
+    "Current cost: $3-6/kg, projected to hit $1-2/kg by 2030 with scale. The EU plans 40GW electrolyzer capacity by 2030. US Inflation Reduction Act offers $3/kg tax credit for green H2. (Source: Hydrogen Council) 📉",
+    "Blue hydrogen (from natural gas with 90% carbon capture) serves as a bridge. Green hydrogen is the end goal for true net-zero. Global electrolyzer capacity: 1.4 GW (2023), projected 175 GW by 2030. (Source: BloombergNEF) 🎯"
+  ],
+  "nuclear energy": [
+    "Nuclear power provides 10% of global electricity from 440 reactors in 32 countries. It's the second-largest source of low-carbon electricity after hydro. France gets 70% of power from nuclear. (Source: World Nuclear Association 2024) ⚛️",
+    "Modern reactors have excellent safety records—fewer deaths per TWh than any other energy source including solar and wind. New Gen III+ and Gen IV designs are even safer with passive safety systems. (Source: Our World in Data Energy Safety) 🛡️",
+    "Small Modular Reactors (SMRs) are emerging: 300MW units, factory-built, lower upfront costs, flexible deployment. 80+ designs under development globally. First commercial SMRs operational by 2028. (Source: IAEA SMR Booklet) 🏭",
+    "Nuclear fusion (ITER project) could provide unlimited clean energy by 2050s. Recent breakthroughs: NIF achieved fusion ignition (2022), private companies racing to commercialize. (Source: ITER Organization, DOE Fusion) ☀️"
   ],
   
-  // CLIMATE SCIENCE
+  // ========================
+  // CLIMATE SCIENCE (Sources: IPCC AR6, NASA GISS, NOAA, Met Office, Carbon Brief)
+  // ========================
   "climate change": [
-    "Climate change refers to long-term shifts in temperatures and weather patterns, primarily caused by human activities since the Industrial Revolution. 🌡️",
-    "Key driver: burning fossil fuels releases CO2. Levels rose from 280ppm (pre-industrial) to 420ppm today—highest in 800,000 years. 📈",
-    "Effects: 1.1°C warming already, sea levels up 20cm, more extreme weather, ecosystem shifts, glacier loss, ocean acidification. 🌊🔥",
-    "Solutions: net-zero by 2050, renewable energy transition, electrify transport, protect forests, sustainable agriculture, green buildings. 🌱"
+    "Climate change refers to long-term shifts in global temperatures and weather patterns. Since 1880, Earth has warmed 1.2°C (2.2°F), with most warming since 1975. The last decade was the warmest on record. (Source: NASA GISS 2024) 🌡️",
+    "Human activities cause 100% of observed warming. Burning fossil fuels released 37.4 billion tons of CO2 in 2023. CO2 levels: 280ppm (pre-industrial) → 424ppm today—highest in 4 million years. (Source: NOAA Global Monitoring Lab) 📈",
+    "Observed effects: sea levels up 21cm since 1880, Arctic sea ice down 13%/decade, glaciers retreating globally, extreme weather 5x more frequent, ecosystem shifts, earlier springs. (Source: IPCC AR6 WG1 2021) 🌊🔥",
+    "Solutions from IPCC: achieve net-zero by 2050, triple renewable capacity by 2030, phase out unabated fossil fuels, protect forests, electrify transport, shift to sustainable food systems. Cost: 1-2% of global GDP. (Source: IPCC AR6 WG3 2022) 🌱"
   ],
   "greenhouse effect": [
-    "The greenhouse effect is natural and essential—without it Earth would be -18°C! Gases trap heat from the sun, keeping us warm. ☀️",
-    "Problem: human activities have enhanced it dramatically. CO2 from fossil fuels, methane from agriculture, nitrous oxide from fertilizers. 📊",
-    "CO2 stays in atmosphere 300-1000 years, methane 12 years (but 80x more potent short-term), nitrous oxide 114 years. Each matters. ⏰",
-    "Water vapor is the most abundant greenhouse gas but responds to temperature—it's a feedback, not a driver. Clouds are complex and both warm and cool. ☁️"
+    "The greenhouse effect is essential for life—without it, Earth would be -18°C (-0.4°F)! Gases like CO2, methane, and water vapor trap infrared radiation from the sun, keeping the planet warm. (Source: NASA Climate) ☀️",
+    "Human activities have enhanced this effect by 50% since pre-industrial times. Current radiative forcing: +2.72 W/m² (2019). CO2 contributes 66%, methane 16%, nitrous oxide 7%, halocarbons 11%. (Source: IPCC AR6 WG1) 📊",
+    "CO2 stays in atmosphere 300-1000 years, methane 12 years (but 80x more potent short-term), nitrous oxide 109 years (273x more potent). Each gas requires different solutions. (Source: IPCC AR6, EPA) ⏰",
+    "Water vapor is the most abundant greenhouse gas but acts as a feedback—as temperatures rise, more evaporation, more warming. Clouds have both warming and cooling effects, a key area of climate research. (Source: NASA CERES) ☁️"
   ],
   "carbon footprint": [
-    "Your carbon footprint is total greenhouse gases from your activities, measured in CO2 equivalent. Average American: 16 tons/year; global average: 4 tons. 👣",
-    "Breakdown: transportation (29%), home energy (21%), food (16%), goods (15%), services (19%). Biggest wins come from the biggest categories. 📊",
-    "Top actions: fly less (1 flight = 1-3 tons CO2), drive electric or car-free, home efficiency, plant-rich diet, renewable energy. ✈️🚗🏠🥗",
-    "Collective action matters more than individual: support climate policies, choose sustainable companies, vote for climate leaders, spread awareness. 🌍"
+    "Your carbon footprint is total greenhouse gases from your activities, measured in CO2 equivalent (CO2e). Average American: 14.7 tons/year; EU: 6.8 tons; global average: 4.7 tons; sustainable target: 2 tons. (Source: Global Carbon Project 2024) 👣",
+    "Breakdown varies by lifestyle. Typical American: transportation (29%), housing (25%), food (14%), goods (12%), services (20%). Biggest wins come from the biggest categories—focus there first. (Source: CoolClimate Network, UC Berkeley) 📊",
+    "Top individual actions (tons CO2e/year saved): live car-free (2.4), avoid one transatlantic flight (1.6), buy renewable electricity (1.5), plant-rich diet (0.8), upgrade to EV (0.5). (Source: Environmental Research Letters, Wynes & Nicholas 2017) ✈️🚗🏠🥗",
+    "But individual action alone isn't enough—we need systemic change. Support climate policies, divest from fossil fuels, choose sustainable companies, vote for climate leaders, use your voice. Collective action multiplies impact. (Source: Nature Climate Change) 🌍"
   ],
   "net zero": [
-    "Net zero means balancing CO2 emissions with CO2 removal—not necessarily zero emissions, but what's emitted equals what's captured. ⚖️",
-    "Over 90 countries have net-zero targets, covering 80% of global emissions. Most target 2050, China 2060, India 2070. 🌐",
-    "Achieved through: massive renewable expansion, electrification, efficiency, behavior change, plus removal via forests and carbon capture. 🌲🔧",
-    "Science says we need global net-zero by 2050 to limit warming to 1.5°C. Each 0.1°C matters for extreme weather and sea level. 📉"
+    "Net zero means balancing CO2 emissions with CO2 removal—not necessarily zero emissions, but emissions equal removals. Global emissions must fall 45% by 2030 and reach net-zero by 2050 for 1.5°C. (Source: IPCC SR15) ⚖️",
+    "151 countries have net-zero targets covering 92% of global GDP. Targets: EU (2050), US (2050), UK (2050), Japan (2050), China (2060), India (2070). Only 41 countries are 'almost sufficient' on track. (Source: Net Zero Tracker, Climate Action Tracker 2024) 🌐",
+    "Achieving net-zero requires: 90% emissions cuts through efficiency, renewables, electrification, plus 10% removal via forests, soil carbon, direct air capture, enhanced weathering. (Source: IEA Net Zero Roadmap 2023) 🌲🔧",
+    "Science is clear: every 0.1°C of additional warming increases risks. At 1.5°C: 70-90% coral reef loss. At 2°C: 99% loss. Hundreds of millions more exposed to extreme heat. The math demands urgency. (Source: IPCC AR6 WG2) 📉"
   ],
   "ocean acidification": [
-    "Oceans absorb 30% of human CO2 emissions, making them more acidic. pH dropped from 8.2 to 8.1—sounds small but 30% more acidic! 🌊",
-    "Effects: shellfish struggle to build shells, coral bleaching accelerates, food chains disrupted. Called 'climate change's evil twin.' 🐚",
-    "Arctic waters are most vulnerable—cold water absorbs more CO2. Pteropods (sea butterflies), vital food source, are already dissolving. ❄️",
-    "Solutions: cut CO2 emissions (the only real fix), protect marine ecosystems, research-resistant species, reduce other ocean stressors. 🔬"
+    "Oceans have absorbed 30% of human CO2 emissions (560 billion tons since 1800), making them 30% more acidic. pH dropped from 8.2 to 8.1—sounds small but it's logarithmic, a huge chemical change. (Source: NOAA PMEL) 🌊",
+    "Effects: shellfish struggle to build calcium carbonate shells, coral bleaching accelerates, pteropods (sea butterflies) are dissolving, fish behavior affected. Called 'climate change's equally evil twin.' (Source: IPCC Ocean Report 2019) 🐚",
+    "Arctic and Southern Oceans are most vulnerable—cold water absorbs more CO2 and is already approaching undersaturation for aragonite (key shell mineral). Some areas may become corrosive within decades. (Source: Nature Climate Change) ❄️",
+    "Solutions: cut CO2 emissions (the only permanent fix), protect and restore marine ecosystems (seagrass, kelp sequester carbon), reduce other ocean stressors (pollution, overfishing). (Source: IPCC, IUCN Ocean Deox) 🔬"
   ],
   "tipping points": [
-    "Tipping points are thresholds where small changes trigger large, irreversible shifts in climate systems—like dominos falling. ⚠️",
-    "Major concerns: Amazon rainforest dieback, Greenland/Antarctic ice sheet collapse, permafrost methane release, Atlantic current shutdown. 🌍",
-    "Some may already be crossed: Arctic summer ice, parts of West Antarctic ice sheet. Each 0.1°C of warming increases risks. 📊",
-    "Beyond 1.5°C, cascading tipping points become more likely, potentially adding 0.5°C+ of additional warming. Urgency is critical. ⏰"
+    "Climate tipping points are thresholds where small changes trigger large, often irreversible shifts in Earth systems. Research identifies 16 major tipping elements, 5 already at risk with current 1.2°C warming. (Source: Science, Armstrong McKay et al. 2022) ⚠️",
+    "At risk now: Greenland ice sheet (sea level +7m), West Antarctic ice sheet (+5m), Amazon rainforest dieback, low-latitude coral reef die-off, permafrost collapse. Each has multi-century timescales but may be triggered soon. (Source: Nature 2022) 🌍",
+    "Beyond 1.5°C: additional risks include boreal permafrost collapse, Labrador-Irminger Sea circulation shift, Amazon southern dieback. Beyond 2°C: East Antarctic ice sheet, Arctic winter sea ice loss. (Source: IPCC AR6) 📊",
+    "Tipping cascades: one tipping point can trigger others—like dominos. Greenland melt could slow Atlantic circulation, changing rainfall patterns globally. This interconnection is why limiting warming matters. (Source: PNAS) ⏰"
+  ],
+  "sea level rise": [
+    "Global sea levels rose 21-24cm since 1880, with rate accelerating: 1.4mm/year (1901-1990) → 3.7mm/year (2006-2018). Currently rising ~4.4mm/year. Thermal expansion + ice melt both contribute. (Source: NASA Sea Level Portal) 🌊",
+    "Projections by 2100: 0.3-0.6m (low emissions) to 0.6-1.1m (high emissions). Some studies suggest up to 2m possible if ice sheet instabilities trigger. Sea level will continue rising for centuries even if emissions stop. (Source: IPCC AR6) 📈",
+    "Impacts: 1 billion people live in low-elevation coastal zones. Cities at risk: Miami, Shanghai, Mumbai, Bangkok, New York. Many Pacific island nations face existential threat. (Source: Climate Central) 🏙️",
+    "Adaptation: sea walls, managed retreat, nature-based solutions (mangroves, marshes), improved drainage, building codes. The Netherlands shows adaptation is possible but expensive—they spend €1.3B/year. (Source: Delta Programme) 🌴"
+  ],
+  "extreme weather": [
+    "Climate change is making extreme weather more frequent and intense. Heat waves: 5x more common. Heavy rainfall events: up 30%. Wildfire conditions: 2x worse. Hurricane intensity: increasing. (Source: Carbon Brief Attribution Database) 🔥🌀",
+    "Attribution science now links specific events to climate change. 2023 examples: European heatwave 'virtually impossible' without climate change, Canadian wildfires 2x more likely, Libyan floods far more intense. (Source: World Weather Attribution) 📊",
+    "Costs mounting: 2023 saw 28 billion-dollar disasters in US alone ($92.9B total). Global weather disasters cost $280+ billion annually, up 250% from 1980s average. (Source: NOAA NCEI, Munich Re) 💰",
+    "Adaptation crucial: early warning systems, resilient infrastructure, nature-based solutions, updated building codes, climate-smart agriculture, emergency preparedness. Prevention is always cheaper than response. (Source: UNDRR) 🛡️"
   ],
   
-  // SUSTAINABLE LIVING
+  // ========================
+  // SUSTAINABLE LIVING (Sources: EPA, UN Environment, Project Drawdown, Ellen MacArthur Foundation)
+  // ========================
   "sustainable living": [
-    "Sustainable living means meeting present needs without compromising future generations. It spans energy, food, transport, consumption, and community. 🌱",
-    "Key principles: reduce consumption, choose quality over quantity, embrace sharing economy, eat plant-rich, avoid single-use, repair don't replace. ♻️",
-    "Home actions: LED lighting (75% less energy), smart thermostats (10% savings), water-efficient fixtures, proper insulation, renewable energy. 🏠",
-    "Every action counts, but systemic change matters most. Support policies, vote, choose sustainable businesses, and inspire others. 🗳️"
+    "Sustainable living means meeting present needs without compromising future generations' ability to meet theirs. It spans energy, food, transport, consumption, waste, and community. (Source: UN Brundtland Commission) 🌱",
+    "Key principles from circular economy: refuse unnecessary consumption, reduce what you need, reuse through sharing/renting, repair before replacing, recycle as last resort. Quality over quantity always. (Source: Ellen MacArthur Foundation) ♻️",
+    "Home actions: LED lighting (75% energy savings), smart thermostats (10-15% savings), water-efficient fixtures (30% savings), proper insulation (25% energy cut), renewable energy (100% clean). (Source: ENERGY STAR, DOE) 🏠",
+    "Systemic change matters most: support climate policies, vote for environmental leaders, choose sustainable companies, divest from fossil fuels, engage your workplace. Individual + collective action together. (Source: Nature Climate Change) 🗳️"
   ],
   "zero waste": [
-    "Zero waste aims to redesign systems so all products are reused—nothing goes to landfill or incineration. It's circular, not linear. ♻️",
-    "The 5 R's: Refuse (say no to unnecessary stuff), Reduce, Reuse, Recycle, Rot (compost). Order matters—prevention beats recycling! 🚫",
-    "Practical steps: bring reusables, buy package-free, compost food scraps, repair items, choose durable goods, declutter mindfully. 🛒",
-    "Cities like San Francisco achieve 80% diversion from landfill. Kamikatsu, Japan aims for 100% zero waste. It's achievable at scale! 🏙️"
+    "Zero waste philosophy aims to redesign products and systems so nothing goes to landfill or incineration—everything is reused, composted, or truly recycled. It's circular, not linear. (Source: Zero Waste International Alliance) ♻️",
+    "The 5 R's in order: Refuse (say no to unnecessary stuff), Reduce, Reuse, Recycle, Rot (compost). Order matters—prevention beats recycling by 10x in environmental impact. (Source: Zero Waste Europe) 🚫",
+    "Practical steps: reusable bags/bottles/containers, package-free shopping, composting (30% of waste is food), repair cafes, buy secondhand, choose durable goods, digital over physical. (Source: EPA Waste Reduction) 🛒",
+    "Cities achieving high diversion: San Francisco 80%, Seoul 70%, Ljubljana 65%. Kamikatsu, Japan aims for 100%. Companies like Subaru have zero-landfill factories. It's achievable at scale! (Source: C40 Cities) 🏙️"
   ],
   "circular economy": [
-    "Circular economy eliminates waste by designing products for reuse, repair, and recycling—keeping materials in use as long as possible. 🔄",
-    "Contrast with linear 'take-make-dispose' model. Circular saves resources, cuts emissions, creates jobs, reduces pollution. Win-win-win! 💪",
-    "Examples: phone trade-in programs, clothing rental, refurbished electronics, industrial symbiosis (one company's waste = another's input). 📱👗",
-    "EU leads with Circular Economy Action Plan. Companies like Patagonia, Interface, Philips prove it's profitable. Expected to add $4.5 trillion to economy by 2030. 💰"
+    "Circular economy eliminates waste by designing products for durability, reuse, remanufacturing, and recycling—keeping materials at highest value as long as possible. (Source: Ellen MacArthur Foundation) 🔄",
+    "Three principles: design out waste and pollution, keep products and materials in use, regenerate natural systems. Contrasts with linear 'take-make-dispose' that generates 2 billion tons of waste annually. (Source: World Bank What a Waste 2.0) 💪",
+    "Business models: product-as-service (Philips lighting), take-back programs (Apple Trade-In), remanufacturing (Caterpillar—saves 80% energy), sharing platforms (car sharing). Profitable and sustainable. (Source: Accenture) 📱",
+    "Economic opportunity: circular economy could generate $4.5 trillion in economic benefits by 2030, create 700,000 jobs in EU alone, reduce virgin material use by 32%. (Source: Accenture, EU Circular Economy Package) 💰"
   ],
   "sustainable fashion": [
-    "Fashion produces 10% of global carbon emissions—more than aviation and shipping combined! It's the second largest polluter after oil. 👗",
-    "Problems: fast fashion, synthetic fibers (microplastics), toxic dyes, water use (2,700 liters for one cotton shirt), textile waste. 🚰",
-    "Solutions: buy less and better, choose natural/organic fibers, support ethical brands, secondhand shopping, clothing swaps, repair. 🧵",
-    "Look for certifications: GOTS (organic), OEKO-TEX (safe chemicals), Fair Trade, B Corp. Rent for special occasions! 🏷️"
+    "Fashion produces 8-10% of global carbon emissions—more than aviation and shipping combined! The industry also uses 215 trillion liters of water annually and creates 92 million tons of textile waste. (Source: UN Environment, Ellen MacArthur Foundation) 👗",
+    "Problems: fast fashion encourages 80 billion new garments/year (400% more than 20 years ago), synthetic fibers release 500,000 tons of microplastics annually, toxic dyes pollute waterways in production countries. (Source: Quantis, Nature Reviews) 🚰",
+    "Solutions: buy less but better quality, choose natural/organic fibers (organic cotton, linen, hemp), secondhand shopping (market growing 25%/year), clothing rental, repair and mend, responsible disposal. (Source: ThredUp Resale Report 2024) 🧵",
+    "Look for certifications: GOTS (organic textiles), OEKO-TEX (safe chemicals), Fair Trade (worker rights), B Corp (overall sustainability), Cradle to Cradle (circular design). Transparency tools: Fashion Revolution, Good On You. (Source: Textile Exchange) 🏷️"
   ],
   
-  // TRANSPORTATION
+  // ========================
+  // TRANSPORTATION (Sources: IEA Transport, ICCT, Transport & Environment)
+  // ========================
   "electric vehicle": [
-    "EVs are 3-4x more efficient than gas cars: 85% of battery energy reaches wheels vs 20% for internal combustion. Zero tailpipe emissions. 🚗⚡",
-    "Total lifecycle emissions 50-70% lower than gas cars, improving as grids get cleaner. Manufacturing emissions paid back in 1-2 years of driving. 📊",
-    "Costs dropping fast: battery costs fell 90% since 2010. Many EVs now cheaper to own than gas cars when including fuel and maintenance. 💰",
-    "Norway leads with 80% EV market share. Global EV sales hit 14 million in 2023—10x growth in 5 years. Charging infrastructure expanding rapidly. 🔌"
+    "EVs are 3-4x more energy efficient than gasoline cars: 85-90% of battery energy reaches wheels vs 20-30% for internal combustion engines. Zero tailpipe emissions improve urban air quality. (Source: DOE Alternative Fuels Data Center) 🚗⚡",
+    "Total lifecycle emissions 50-80% lower than gasoline cars depending on grid mix, improving as grids get cleaner. Battery manufacturing emissions 'paid back' in 6-18 months of driving. (Source: ICCT 2021 Lifecycle Analysis) 📊",
+    "Costs falling rapidly: battery pack costs dropped from $1,183/kWh (2010) to $139/kWh (2023). Many EVs now cheaper to own than equivalent gas cars when including fuel and maintenance. (Source: BloombergNEF) 💰",
+    "Global momentum: EV sales hit 14 million in 2023 (18% of new car sales), up from 3 million in 2020. Norway leads at 82% market share. China sold 8 million. Charging infrastructure growing rapidly. (Source: IEA Global EV Outlook 2024) 🔌"
   ],
   "sustainable transport": [
-    "Transport produces 16% of global emissions. Solutions: public transit, cycling, walking, EVs, car-sharing, working from home. 🚌🚴",
-    "Best cities for sustainable transport: Amsterdam, Copenhagen, Tokyo. Dense, mixed-use development + transit = less driving. 🏙️",
-    "Aviation is hardest to decarbonize. Solutions: fly less, sustainable aviation fuel, electric/hydrogen short-haul, high-speed rail alternative. ✈️🚄",
-    "Shipping going green: wind-assisted ships, ammonia/hydrogen fuel, slow steaming, port electrification. Maersk ordered carbon-neutral ships. 🚢"
+    "Transport produces 16% of global emissions (8.4 Gt CO2). Road vehicles are 75% of transport emissions. Decarbonizing requires electrification, modal shift, efficiency, and reduced travel demand. (Source: IEA Transport Sector) 🚌🚴",
+    "Best strategies: public transit (1/6 emissions of driving), cycling (zero emissions + health benefits), walking, EVs, car-sharing (reduces car ownership 40%), remote work (cut commuting). (Source: ITDP, European Environment Agency) 🏙️",
+    "Aviation (2.5% of global CO2) is harder to decarbonize. Solutions: fly less, sustainable aviation fuel (SAF), electric short-haul (emerging), hydrogen, high-speed rail alternatives. SAF can reduce emissions 80%. (Source: ICAO, ATAG) ✈️🚄",
+    "Shipping (2.9% of global CO2) going green: wind-assisted ships, ammonia/hydrogen/methanol fuel, slow steaming (cuts emissions 30%), port electrification. IMO targets 50% reduction by 2050. First zero-emission vessels sailing. (Source: IMO, ICCT) 🚢"
+  ],
+  "aviation emissions": [
+    "Aviation produces 2.5% of global CO2 but 3.5% of total warming impact (including contrails, NOx, water vapor). Fastest-growing emissions source pre-COVID, now rebounding. 1,034 million tons CO2 in 2022. (Source: Our World in Data, IATA) ✈️",
+    "One long-haul flight can emit more than an average person in many countries emits in a year. London-New York roundtrip: ~1.8 tons CO2 per passenger. Frequent flyers (1% of population) cause 50% of emissions. (Source: ICCT, Transport & Environment) 🌍",
+    "Solutions: fly less (most effective), choose direct flights (takeoff/landing is 25% of emissions), fly economy (more passengers per flight), sustainable aviation fuel (80% reduction potential), carbon offsetting (last resort). (Source: ICAO CORSIA) 🌱",
+    "Future tech: electric aircraft (viable for <500km by 2030s), hydrogen (long-haul by 2040s), SAF scaling up (currently 0.1% of jet fuel, target 10% by 2030). Policy needed: kerosene taxes, flight caps, rail investment. (Source: ATAG, E4tech) ⚡"
   ],
   
-  // NATURE & BIODIVERSITY
+  // ========================
+  // NATURE & BIODIVERSITY (Sources: IPBES, WWF, IUCN Red List, UN Environment)
+  // ========================
   "biodiversity": [
-    "Biodiversity is the variety of life on Earth—species, genetic diversity, ecosystems. It's declining faster than any time in human history. 🌿",
-    "1 million species face extinction. We've lost 69% of wildlife populations since 1970. This is the sixth mass extinction, driven by humans. 📉",
-    "Causes: habitat loss (agriculture, urbanization), overexploitation, pollution, invasive species, climate change. All interconnected. ⚠️",
-    "Why it matters: ecosystems provide food, clean water, medicine, pollination, climate regulation. Economy depends on nature—$44 trillion. 💚"
+    "Biodiversity encompasses all life on Earth: an estimated 8.7 million species, vast genetic diversity within species, and countless ecosystems. It's the foundation of all ecosystem services humans depend on. (Source: IPBES Global Assessment 2019) 🌿",
+    "Crisis scale: 1 million species threatened with extinction. Wildlife populations declined 69% since 1970 (Living Planet Index). Extinction rate 100-1000x above background rate. We're in the 6th mass extinction. (Source: WWF Living Planet Report 2022) 📉",
+    "Drivers (in order of impact): land/sea use change (habitat loss), direct exploitation (hunting, fishing), climate change, pollution, invasive species. All accelerating. 75% of land and 66% of ocean significantly altered. (Source: IPBES 2019) ⚠️",
+    "Why it matters: nature provides services worth $125-140 trillion/year—1.5x global GDP. This includes pollination (75% of crops), water purification, carbon storage, medicines (50% of drugs nature-derived), flood protection. (Source: Costanza et al., IPBES) 💚"
   ],
   "deforestation": [
-    "We lose 10 million hectares of forest annually—primarily tropical. That's 27 soccer fields per minute. 78% is for agriculture. 🌳❌",
-    "Amazon rainforest approaching tipping point—at 20-25% deforestation (now ~17%), it could collapse into savanna, releasing massive CO2. 🌿",
-    "Solutions: sustainable agriculture, forest certification (FSC), halting illegal logging, indigenous land rights, consumer choices. 🛒",
-    "Good news: some forests recovering. Costa Rica doubled forest cover since 1980s. EU banning deforestation-linked imports. Progress is possible! 🌱"
+    "We lose 10 million hectares of forest annually—size of South Korea every year. 420 million hectares lost since 1990. Primary (old-growth) forest loss is 4 million ha/year. (Source: FAO Global Forest Assessment 2020) 🌳❌",
+    "Causes: agriculture expansion (80%—beef, soy, palm oil, cocoa, coffee), logging (legal and illegal), mining, infrastructure. Amazon, Congo Basin, and Southeast Asia are hotspots. (Source: WRI Global Forest Watch) 🌿",
+    "Amazon rainforest at risk: 17% already deforested, approaching 20-25% tipping point where it could collapse into savanna. Would release 140 billion tons CO2 and disrupt rainfall across South America. (Source: Nature, Lovejoy & Nobre) 🌿",
+    "Solutions: sustainable supply chains (zero-deforestation commitments), forest certification (FSC), indigenous land rights (indigenous areas have 36% less deforestation), payment for ecosystem services. EU deforestation regulation (2023) bans products linked to deforestation. (Source: Global Canopy, EU Regulation) 🛒"
   ],
   "coral reefs": [
-    "Coral reefs cover 0.1% of ocean floor but support 25% of marine species. They protect coastlines, support fisheries, drive tourism—$375 billion value. 🐠",
-    "Bleaching occurs when warm water stresses coral, expelling algae partners. Mass bleaching events now 5x more frequent than in 1980s. 🌡️",
-    "At 1.5°C warming, 70-90% of coral reefs could die. At 2°C, 99% loss. We're currently heading for 2.5-3°C. Time is critical. ⏰",
-    "Hope: heat-resistant coral breeding, marine protected areas, reducing local stressors (pollution, overfishing), cutting emissions fastest. 🔬"
+    "Coral reefs cover just 0.1% of ocean floor but support 25% of all marine species—the 'rainforests of the sea.' They protect 150,000+ km of coastline and provide food for 500+ million people. Value: $9.9 trillion/year. (Source: NOAA, UNEP Coral Reef Economics) 🐠",
+    "Bleaching occurs when stressed coral expel their symbiotic algae (zooxanthellae). Cause: ocean warming, even 1-2°C above normal for weeks. Mass bleaching events now 5x more frequent than 1980s. 2024 saw worst global bleaching on record. (Source: NOAA Coral Reef Watch) 🌡️",
+    "Outlook: at 1.5°C warming, 70-90% of reefs will die. At 2°C warming, 99% loss. Great Barrier Reef has lost 50% of coral since 1995. Some resilient corals are being identified and propagated. (Source: IPCC SR15, AIMS) ⏰",
+    "Action needed: limit warming to 1.5°C (primary solution), marine protected areas (currently 8% of ocean), reduce local stressors (pollution, overfishing, runoff), coral restoration (assisted evolution, coral gardening). (Source: IUCN, Coral Triangle Initiative) 🔬"
   ],
   "rewilding": [
-    "Rewilding restores ecosystems by reintroducing species, removing barriers, and letting nature self-regulate. It's conservation going wild! 🦬",
-    "Examples: wolves in Yellowstone (restored rivers!), European bison in Poland, beavers in UK (natural flood management). Remarkable cascades. 🐺",
-    "Benefits: carbon sequestration, flood prevention, water purification, habitat creation, tourism economy, human wellbeing. Nature heals. 🌊",
-    "Rewilding Europe aims for 1 million hectares. 30x30 global target: protect 30% of land and ocean by 2030. Ambitious but achievable! 🌍"
+    "Rewilding restores ecosystems by reintroducing native species, removing barriers, and allowing natural processes to resume. It's proactive conservation—not just protecting what remains but rebuilding what was lost. (Source: Rewilding Europe) 🦬",
+    "Famous examples: wolves in Yellowstone restored riverbanks through trophic cascades; European bison in Poland's Białowieża Forest; beavers in UK creating natural flood management; condors in California; lynx in Switzerland. (Source: Monbiot 'Feral', various rewilding organizations) 🐺",
+    "Benefits multiply: carbon sequestration (rewilded areas store 40% more carbon), flood prevention, water purification, erosion control, pollinator habitat, tourism economy, human wellbeing and connection to nature. (Source: IUCN Nature-based Solutions) 🌊",
+    "Scale of ambition: Rewilding Europe targeting 1 million hectares. UN Decade on Ecosystem Restoration (2021-2030). 30x30 goal: protect 30% of land and ocean by 2030 (Kunming-Montreal Framework). €20 billion EU restoration law. (Source: UN, CBD, EU) 🌍"
+  ],
+  "pollinators": [
+    "Pollinators (bees, butterflies, hummingbirds, bats, moths) enable reproduction of 75% of flowering plants and 35% of food crops. Their services worth $235-577 billion annually. (Source: IPBES Pollinator Assessment 2016) 🐝",
+    "Crisis: wild bee species declining 40%+ toward extinction. Monarch butterflies down 80%. Insect biomass declining 2.5% per year (Krefeld study). Causes: pesticides (especially neonicotinoids), habitat loss, disease, climate change. (Source: Science, Biological Conservation) 📉",
+    "Solutions: reduce pesticide use (EU banned some neonicotinoids), plant native flowers, create pollinator corridors, no-mow May/June, leave wild areas in gardens and farms, support organic agriculture. (Source: Xerces Society, Pollinator Partnership) 🌻",
+    "Good news: when given habitat, pollinators recover quickly. Wildflower strips on farms boost yields, not just save bees. Urban gardens can be havens. Policy momentum building—EU Pollinators Initiative, Biden Executive Order. (Source: Nature Ecology & Evolution, EU Pollinators) 🌼"
   ],
   
-  // WATER
+  // ========================
+  // WATER (Sources: UN Water, WHO, WRI Aqueduct, UNEP)
+  // ========================
   "water conservation": [
-    "Freshwater is just 2.5% of Earth's water, and 69% of that is locked in ice. Climate change is intensifying droughts and floods. 💧",
-    "Agriculture uses 70% of freshwater withdrawals. Industry 20%, households 10%. Efficiency in all sectors is crucial. 🌾",
-    "Home savings: fix leaks (10% of homes waste 90+ gallons/day), low-flow fixtures (30% savings), shorter showers, efficient appliances. 🚿",
-    "Innovative solutions: drip irrigation, rainwater harvesting, greywater recycling, desalination (energy-intensive but improving). 🔧"
+    "Freshwater is just 2.5% of Earth's water, and 69% of that is locked in ice caps and glaciers. Only 0.3% is accessible surface freshwater. Climate change is intensifying both droughts and floods. (Source: USGS, UN Water) 💧",
+    "Water use: agriculture 70% (irrigation), industry 20%, households 10%. But varies by region—in some developed countries, industry uses 60%+. Efficiency improvements can reduce agricultural water use 30-50%. (Source: FAO AQUASTAT, WRI) 🌾",
+    "Home water savings: fix leaks (1 drip/second = 3,000 gallons/year), low-flow fixtures (30-50% savings), efficient appliances (ENERGY STAR washers use 33% less water), xeriscaping, rainwater harvesting. (Source: EPA WaterSense) 🚿",
+    "Water stress increasing: 2 billion people lack safe drinking water, 4 billion experience severe water scarcity at least one month/year. By 2050, 5.7 billion could live in water-scarce areas. (Source: UN SDG6, WRI Aqueduct) 🔧"
   ],
   "ocean pollution": [
-    "8 million tons of plastic enter oceans annually. By 2050, oceans could have more plastic than fish by weight. 🌊🐟",
-    "Microplastics now found everywhere—deepest ocean trenches, Arctic ice, our blood. Health impacts still being understood. 🔬",
-    "Other pollution: agricultural runoff (dead zones), industrial chemicals, oil spills, noise (affects whales), light (affects turtles). ⚠️",
-    "Solutions: plastic reduction at source, better waste management, beach cleanups, microplastic filters, international ocean treaties. 🚫"
+    "8-12 million tons of plastic enter oceans annually—a garbage truck every minute. By 2050, oceans could have more plastic than fish by weight if current trends continue. (Source: Ellen MacArthur Foundation, Ocean Conservancy) 🌊🐟",
+    "Microplastics (<5mm) now found everywhere: Mariana Trench (deepest ocean), Mount Everest summit, Arctic ice cores, rainfall, human blood and placenta. Average person ingests 5 grams of plastic weekly. (Source: WWF, Environmental Science & Technology) 🔬",
+    "Other major pollutants: nutrient runoff (nitrogen, phosphorus) creates 500+ dead zones; oil pollution (3 million tons/year); industrial chemicals (persistent organic pollutants); noise pollution affecting marine mammals; light pollution affecting sea turtles. (Source: UNEP Marine Litter, NOAA) ⚠️",
+    "Solutions: reduce single-use plastic at source (most effective), better waste management in developing countries (80% of ocean plastic from 10 rivers), Extended Producer Responsibility, UN Global Plastics Treaty (negotiating now). (Source: Science, UNEA) 🚫"
+  ],
+  "wetlands": [
+    "Wetlands (marshes, swamps, bogs, mangroves) are Earth's most productive ecosystems. They store 30% of land-based carbon despite covering 5-8% of land. Critical for water filtration and flood control. (Source: Ramsar Convention, IPCC) 🌿",
+    "We've lost 87% of wetlands since 1700—more than any other ecosystem. Currently disappearing 3x faster than forests. Causes: drainage for agriculture, urban development, pollution, dam construction. (Source: Ramsar Global Wetland Outlook 2021) 📉",
+    "Benefits: water purification (a single wetland can filter millions of gallons daily), flood buffering (coastal wetlands prevented $625 million in flood damages during Hurricane Sandy), habitat for 40% of species, carbon storage. (Source: EPA, Nature) 💚",
+    "Restoration is possible and cost-effective: Florida Everglades restoration ($16B), UK Great Fen project. Constructed wetlands can treat wastewater. Mangrove restoration protects coastlines from storms and provides livelihoods. (Source: IUCN, The Nature Conservancy) 🌴"
   ],
   
-  // FOOD & AGRICULTURE
+  // ========================
+  // FOOD & AGRICULTURE (Sources: FAO, IPCC Food, WRI, Project Drawdown)
+  // ========================
   "sustainable agriculture": [
-    "Food systems produce 26% of global emissions—not just farming but transport, processing, packaging, waste. 🌾",
-    "Sustainable practices: crop rotation, cover crops, reduced tillage, integrated pest management, precision agriculture. Healthier soil = better yields. 🚜",
-    "Regenerative agriculture goes further—building soil carbon, enhancing biodiversity, improving water retention. Farms can become carbon sinks! 🌱",
-    "Organic reduces pesticides and often has lower emissions, but yields can be lower. Agroecology combines best practices. Balance is key. 🧪"
+    "Food systems produce 26-34% of global emissions—not just farming but land use change, transport, processing, packaging, retail, waste. Agriculture alone is 10-12%. (Source: Nature Food, IPCC SRCCL 2019) 🌾",
+    "Sustainable practices: crop rotation (reduces fertilizer need 20-30%), cover crops (prevent erosion, sequester carbon), reduced tillage (preserves soil structure), integrated pest management (cuts pesticide use 50%+), precision agriculture (optimizes inputs). (Source: FAO, Rodale Institute) 🚜",
+    "Regenerative agriculture goes further: building soil organic matter (1% increase stores 8 tons carbon/hectare), increasing biodiversity, eliminating synthetic inputs, integrating livestock. Farms can become carbon sinks. (Source: Regeneration International, Carbon Underground) 🌱",
+    "Agroecology combines ecological principles with farming: polycultures, beneficial insects, nitrogen-fixing plants, local varieties. Often matches or exceeds industrial yields while using less inputs and building resilience. (Source: IPES-Food, FAO Agroecology) 🧪"
   ],
   "plant based diet": [
-    "Food's carbon footprint: beef (60kg CO2/kg), lamb (24kg), cheese (21kg), pork (7kg), chicken (6kg), vegetables (<1kg). Diet matters! 🥩🥗",
-    "Shifting to plant-rich diet can cut food emissions 70%+ and reduce land use (animal agriculture uses 77% of farmland for 18% of calories). 🌿",
-    "You don't have to go fully vegan—even reducing meat by 50% has major impact. Flexitarian is the fastest-growing diet choice. 🍽️",
-    "Environmental benefits: less deforestation, reduced water use (beef needs 15,000 liters/kg vs vegetables 300 liters/kg), less pollution. 💧"
+    "Food's carbon footprint varies dramatically: beef (60kg CO2e/kg), lamb (24kg), cheese (21kg), pork (7kg), poultry (6kg), tofu (3kg), legumes (2kg), vegetables (2kg). Diet choices matter significantly. (Source: Poore & Nemecek 2018, Science) 🥩🥗",
+    "Shifting to plant-rich diet can reduce food emissions 50-70% and land use 75%. Animal agriculture uses 77% of agricultural land globally for 18% of calories and 37% of protein. Huge efficiency opportunity. (Source: Our World in Data, Poore & Nemecek) 🌿",
+    "You don't have to go fully vegan—flexitarian (reduced meat) diets achieve 70%+ of benefits. Mediterranean diet is healthy and lower-impact. Even replacing beef with chicken cuts emissions 50%. (Source: EAT-Lancet Commission, WRI) 🍽️",
+    "Co-benefits: health (reduced heart disease, cancer, diabetes risk), water savings (beef needs 15,000L/kg vs vegetables 300L/kg), less deforestation (soy for feed drives Amazon clearing), less antibiotic resistance, animal welfare. (Source: The Lancet, WWF) 💧"
   ],
   "food waste": [
-    "1/3 of all food produced is wasted—1.3 billion tons/year. If food waste were a country, it'd be the third-largest emitter after China and US. 🗑️",
-    "Waste happens at every stage: farms (ugly produce), transport, retail (overstocking), homes (over-buying, confusion over dates). 📦",
-    "Solutions: meal planning, proper storage, understanding 'best by' vs 'use by', composting, ugly produce programs, food rescue apps. 📱",
-    "Composting turns food scraps into soil amendment, diverting from landfill where it produces methane. Home or municipal composting both help! 🌱"
+    "1/3 of all food produced globally is lost or wasted—1.3 billion tons/year worth $940 billion. If food waste were a country, it'd be the third-largest GHG emitter after China and USA. (Source: FAO, UNEP Food Waste Index 2021) 🗑️",
+    "Where loss occurs varies: in developing countries, mostly at farm/transport stage (lack of infrastructure). In wealthy countries, 40% at consumer level (over-buying, confusion over date labels, aesthetic standards). (Source: FAO, WRAP UK) 📦",
+    "Solutions: meal planning, proper food storage, understanding 'best by' (quality) vs 'use by' (safety), ugly produce programs, smaller portions, composting, food rescue apps (Too Good To Go, OLIO), better supply chain logistics. (Source: ReFED, WRAP) 📱",
+    "Composting diverts waste from landfill where food produces methane (28x more potent than CO2). Home composting, municipal collection, anaerobic digestion all help. Food scraps become valuable soil amendment. (Source: EPA, NRDC) 🌱"
   ],
   
-  // TECHNOLOGY & INNOVATION
+  // ========================
+  // TECHNOLOGY & INNOVATION (Sources: DOE, IPCC, MIT, Nature journals)
+  // ========================
   "carbon capture": [
-    "Carbon capture, utilization, and storage (CCUS) can capture 85-95% of CO2 from industrial sources like cement and steel plants. 🏭",
-    "Types: post-combustion (from flue gas), pre-combustion (before burning), oxy-fuel (pure oxygen burning). Each suits different applications. 🔧",
-    "Direct Air Capture (DAC) pulls CO2 directly from atmosphere—vital for reaching net-zero and addressing historical emissions. Climeworks, Carbon Engineering leading. 💨",
-    "Current cost: $100-600/ton for DAC. Target: $100/ton for widespread deployment. Scale-up and innovation needed. Not a substitute for cutting emissions! 📉"
+    "Carbon capture, utilization, and storage (CCUS) can capture 85-95% of CO2 from industrial sources like cement (8% of emissions), steel (7%), chemicals. Essential for hard-to-abate sectors. (Source: IEA CCUS Report 2023) 🏭",
+    "Types: post-combustion (capturing from flue gas—most common), pre-combustion (before burning, with hydrogen production), oxy-fuel (burning in pure oxygen). 40 large-scale facilities operate globally, capturing 45 Mt CO2/year. (Source: Global CCS Institute 2023) 🔧",
+    "Direct Air Capture (DAC) pulls CO2 directly from atmosphere at 420ppm—technically harder but can address historical emissions. Leaders: Climeworks (Iceland, 36,000 tons/year), Carbon Engineering (Texas). (Source: IEA DAC Report) 💨",
+    "Costs: point-source capture $50-100/ton; DAC currently $250-600/ton, target $100-150/ton by 2030. Captured CO2 stored underground in geological formations or used in products (concrete, fuels, plastics). CCUS is not a substitute for emissions cuts—it's complementary. (Source: IPCC, McKinsey) 📉"
   ],
   "smart grid": [
-    "Smart grids use digital technology to manage electricity supply and demand in real-time, integrating renewables and EVs smoothly. ⚡🖥️",
-    "Features: two-way communication, automated switching, demand response, predictive maintenance, real-time pricing. More efficient and resilient. 📊",
-    "Enables: rooftop solar integration, EV charging optimization, battery storage coordination, faster outage response. Essential for 100% renewables. 🔋",
-    "Microgrids can operate independently during disasters. Community microgrids provide local resilience and energy democracy. 🏘️"
+    "Smart grids use digital communication technology to detect, react to, and manage electricity supply and demand in real-time, enabling seamless integration of variable renewables and distributed resources. (Source: DOE Smart Grid) ⚡🖥️",
+    "Key features: two-way communication (not just power but data flows), automated switching, demand response (shift consumption to match supply), real-time pricing, predictive maintenance, faster outage detection/restoration. (Source: IEA Smart Grids Report) 📊",
+    "Enables: high renewable penetration (Denmark manages 50%+ wind), EV charging optimization (millions of EVs = massive battery storage), home battery coordination, virtual power plants (aggregate small resources). (Source: WindEurope, IRENA) 🔋",
+    "Microgrids can island from main grid during emergencies—critical for hospitals, military, communities. Puerto Rico building microgrids after Maria. Community microgrids provide local resilience and energy democracy. (Source: NREL, Rocky Mountain Institute) 🏘️"
   ],
   "battery storage": [
-    "Battery storage solves renewable intermittency—storing excess solar/wind for when sun isn't shining or wind isn't blowing. 🔋☀️💨",
-    "Lithium-ion dominates but alternatives emerging: sodium-ion (cheaper, no lithium), flow batteries (long duration), solid-state (safer, denser). 🔬",
-    "Costs fell 90% in 10 years. Grid-scale projects: Tesla's Australian Hornsdale (100MW) saved $150M in 2 years. Economics now favorable. 💰",
-    "Home batteries like Tesla Powerwall (13.5kWh) enable self-consumption and backup. Vehicle-to-grid (V2G) turns EVs into mobile storage. 🚗🏠"
+    "Grid-scale battery storage solves renewable intermittency—storing excess solar/wind for when supply doesn't match demand. Global capacity: 16 GW (2022), projected 411 GW by 2030. (Source: IEA, BloombergNEF) 🔋☀️💨",
+    "Technologies: lithium-ion dominates (but supply chain concerns—lithium, cobalt). Alternatives emerging: sodium-ion (cheaper, abundant), iron-air (long duration, cheap), flow batteries (zinc-bromine, vanadium—grid scale), solid-state (safer, denser). (Source: DOE, Nature Energy) 🔬",
+    "Costs fell 90% in 10 years: lithium-ion from $1,100/kWh (2010) to $139/kWh (2023). Landmark projects: Hornsdale Power Reserve (Australia, 150MW/194MWh) saved grid $150M in 2 years. California adding gigawatts annually. (Source: BloombergNEF, AEMO) 💰",
+    "Home batteries (Tesla Powerwall, LG RESU, Enphase) enable solar self-consumption and backup power. Vehicle-to-Grid (V2G) turns EVs into mobile storage—average EV battery (60kWh) could power home for 2 days. (Source: NREL, DOE) 🚗🏠"
   ],
   
-  // RECYCLING & WASTE
+  // ========================
+  // RECYCLING & WASTE (Sources: EPA, Ellen MacArthur Foundation, World Bank)
+  // ========================
   "recycling": [
-    "Recycling conserves resources: aluminum saves 95% energy, paper 60%, plastic 88%. But only 9% of plastic ever made has been recycled. ♻️",
-    "Challenges: contamination, mixed materials, low oil prices (virgin plastic cheap), limited markets. Wishcycling causes problems! 🚫",
-    "What works: metal and paper recycling are mature. Glass infinitely recyclable. Plastic complicated—focus on #1 (PET) and #2 (HDPE). 📦",
-    "Better than recycling: refuse, reduce, reuse. Design products for recyclability. Extended Producer Responsibility makes companies responsible. 🔄"
+    "Recycling conserves resources and energy: aluminum recycling saves 95% of energy vs virgin production, steel 60%, paper 60%, plastic 76%. But only 9% of all plastic ever produced has been recycled. (Source: EPA, Science Advances 2017) ♻️",
+    "Challenges: contamination (food residue, mixed materials), low commodity prices (virgin materials often cheaper), limited markets (China's National Sword policy 2018 disrupted global recycling), wishcycling causes problems for recyclers. (Source: Resource Recycling, Waste Dive) 🚫",
+    "What works well: aluminum and steel are infinitely recyclable with strong markets. Glass also infinitely recyclable. Paper can be recycled 5-7 times. Plastics complicated—#1 PET and #2 HDPE recyclable; #3-7 rarely. (Source: EPA, APR) 📦",
+    "Better than recycling: refuse unnecessary items, reduce consumption, reuse through repair/sharing. Design for recyclability (mono-materials, no toxic additives). Extended Producer Responsibility makes manufacturers responsible. (Source: Ellen MacArthur Foundation, OECD EPR) 🔄"
   ],
   "plastic pollution": [
-    "We produce 400 million tons of plastic yearly—40% is single-use. Only 9% recycled, 12% incinerated, 79% accumulates in landfills/nature. 🛢️",
-    "Microplastics (<5mm) now everywhere: ocean depths, mountain peaks, Arctic ice, rain, human blood. Average person consumes a credit card of plastic weekly. 😰",
-    "Problem plastics: bags, bottles, straws, food packaging, single-use cutlery. But also: synthetic clothing (microfiber shedding), tires, cigarette filters. 🚬",
-    "Solutions: bans on single-use plastics, refill systems, alternative materials, better recycling, plastic credits, UN global plastics treaty. 🌍"
+    "We produce 400+ million tons of plastic yearly—half is single-use. Only 9% is recycled, 12% incinerated, 79% accumulates in landfills or environment. Production projected to double by 2040 on current trends. (Source: OECD, UNEP) 🛢️",
+    "Microplastics (<5mm) and nanoplastics now ubiquitous: ocean depths, mountain peaks, Arctic ice, rain, indoor air, human blood (77% of people), placenta, breast milk. Health impacts under active research. (Source: Environment International, PNAS) 😰",
+    "Worst offenders: cigarette butts (#1 littered item), plastic bottles, food wrappers, straws, bags, fishing gear ('ghost nets' kill 136,000 marine animals/year). But also: synthetic clothing (microfiber shedding), tires. (Source: Ocean Conservancy, FAO) 🚬",
+    "Solutions: UN Global Plastics Treaty (negotiating binding international law), national plastic bans, Extended Producer Responsibility, deposit-return systems, refill infrastructure, alternative materials, improved waste management in Global South. (Source: UNEA, OECD) 🌍"
   ],
   "composting": [
-    "Composting transforms organic waste into nutrient-rich soil amendment, diverting from landfill where it produces methane (28x more potent than CO2). 🌱",
-    "Methods: backyard bin, tumbler (faster), vermicomposting (worms), Bokashi (fermentation), municipal collection. Match method to your situation. 🏠",
-    "What to compost: fruit/veg scraps, coffee grounds, eggshells, yard waste, cardboard. Not: meat, dairy, oils, diseased plants. Balance greens and browns. ☕🥚",
-    "Benefits: reduces waste 30%, creates free fertilizer, improves soil structure, increases water retention, sequesters carbon. Gardens thrive! 🌻"
+    "Composting transforms organic waste into nutrient-rich soil amendment through aerobic decomposition. Diverts waste from landfills where it produces methane (84x more potent than CO2 over 20 years). (Source: EPA, IPCC) 🌱",
+    "Methods: backyard bin/pile (simple, free), tumbler (faster, neater), vermicomposting (worms, works indoors), Bokashi (fermentation, handles meat/dairy), hot composting (faster, kills pathogens), municipal programs. Match to your situation. (Source: Cornell Composting, Master Gardeners) 🏠",
+    "What to compost: fruit/vegetable scraps, coffee grounds/filters, eggshells, yard waste, cardboard, newspaper. Avoid: meat/dairy (attract pests, unless Bokashi), diseased plants, pet waste, treated wood. Balance 'greens' (nitrogen) and 'browns' (carbon). (Source: EPA, Rodale) ☕🥚",
+    "Benefits: diverts 30% of household waste, creates free fertilizer, improves soil structure (water retention +20%), increases soil carbon sequestration, reduces need for synthetic fertilizers, builds soil biodiversity. Gardens thrive! (Source: USDA, Soil Science Society) 🌻"
+  ],
+  "e waste": [
+    "Electronic waste is the fastest-growing waste stream: 53.6 million metric tons in 2019, projected 74.7 Mt by 2030. Only 17.4% is formally recycled. Contains both valuable materials (gold, silver, copper) and hazardous substances. (Source: UN Global E-waste Monitor 2020) 📱💻",
+    "Problem: short product lifespans (average smartphone: 2-3 years), difficult to repair (proprietary screws, glued batteries), planned obsolescence. When improperly disposed, toxic materials (lead, mercury, cadmium) leach into environment. (Source: WEEE Forum, iFixit) ⚠️",
+    "Solutions: buy durable products, repair when possible (Right to Repair movement gaining ground—EU rules 2021), trade in or donate working devices, use certified e-waste recyclers (e-Stewards, R2). (Source: EPA, Repair.org) 🔧",
+    "Policy momentum: EU Eco-design Directive requires repairability scores, replaceable batteries. France's repairability index. Right to Repair laws passing in US states. Apple, Samsung starting to offer self-repair parts. (Source: EU WEEE Directive, PIRG) ♻️"
   ],
   
-  // POLICY & ACTION
+  // ========================
+  // POLICY & ACTION (Sources: UNFCCC, Climate Action Tracker, UNEP)
+  // ========================
   "paris agreement": [
-    "The Paris Agreement (2015) unites 196 nations to limit warming to 'well below 2°C, pursuing 1.5°C.' Countries set their own targets (NDCs). 🌍",
-    "Current pledges put us on track for 2.5-3°C warming. Gap between pledges and action is even larger. Ambition must increase. 📊",
-    "Key mechanisms: 5-year stocktakes, climate finance ($100B/year goal), technology transfer, loss and damage fund (agreed 2022). 💰",
-    "Success depends on implementation. Some countries ahead of targets, others lagging. US rejoined in 2021. Business and cities often lead. 🏙️"
+    "The Paris Agreement (2015) is a legally binding international treaty. 196 parties committed to limit warming to 'well below 2°C, pursuing 1.5°C' above pre-industrial levels. Countries set Nationally Determined Contributions (NDCs). (Source: UNFCCC) 🌍",
+    "Current pledges fall short: if all 2030 NDCs implemented, warming would reach 2.4-2.6°C by 2100. Implementation gap even larger—policies in place lead to 2.7°C. (Source: Climate Action Tracker, UNEP Emissions Gap 2023) 📊",
+    "Key mechanisms: 5-year Global Stocktakes (first 2023), ratcheting ambition (each NDC must be more ambitious), climate finance ($100B/year goal, finally met 2022), technology transfer, Loss and Damage fund (agreed COP27). (Source: UNFCCC, OECD) 💰",
+    "Enforcement through transparency: countries must report emissions, track progress, be reviewed by experts. No penalties, but 'naming and shaming' plus domestic courts increasingly hold governments accountable (successful climate litigation in NL, Germany, France). (Source: Paris Agreement Article 13, Climate Litigation Database) ⚖️"
   ],
-  "environmental policy": [
-    "Effective climate policies: carbon pricing (tax or cap-and-trade), renewable mandates, efficiency standards, fossil fuel subsidy reform. ⚖️",
-    "Carbon pricing works: EU ETS covers 40% of emissions, prices now €80-100/ton driving clean investment. But coverage and price levels vary globally. 💶",
-    "Green investment: IRA in US ($369B clean energy), EU Green Deal, China's 5-year plans. Government spending is catalyzing private capital. 📈",
-    "Local action matters: cities control 70% of emissions through buildings, transport, waste. C40 cities leading on climate action. 🏢"
+  "carbon pricing": [
+    "Carbon pricing puts a cost on greenhouse gas emissions, creating economic incentives to reduce them. Two main types: carbon taxes (set price, variable reduction) and cap-and-trade/ETS (set reduction, variable price). (Source: World Bank Carbon Pricing Dashboard) 💰",
+    "Coverage growing: 73 carbon pricing initiatives cover 23% of global emissions. Prices vary: EU ETS €80-100/ton, UK £85/ton, California $28/ton, China $8/ton. Sweden has highest tax: $130/ton. (Source: World Bank State and Trends 2024) 📈",
+    "Impact: EU emissions covered by ETS fell 35% (2005-2019). British Columbia carbon tax reduced emissions 5-15% while economy grew. Carbon pricing drives clean investment—EU ETS raised €180 billion for climate action. (Source: ICAP, Nature Climate Change) 📊",
+    "Challenges: prices often too low to drive sufficient change (social cost of carbon estimated $185/ton), political resistance, carbon leakage concerns. Solutions: border carbon adjustments (EU CBAM launching 2026), revenue recycling to households. (Source: IMF, Resources for the Future) ⚖️"
   ],
   "climate activism": [
-    "Climate movements have grown massively: Fridays for Future (millions of students), Extinction Rebellion, 350.org, indigenous-led movements. ✊",
-    "Tactics range from marches to lawsuits to direct action. Climate litigation has won major victories against governments and companies. ⚖️",
-    "Individual action matters but systemic change is essential. Vote, divest, engage employers, support advocacy organizations. 🗳️",
-    "Youth voices are powerful—Greta Thunberg sparked global movement. Intergenerational justice: those who'll live with consequences demand action. 🌱"
+    "Climate movements have grown massively: Fridays for Future (14 million+ strikers in 2019), Extinction Rebellion (direct action), Sunrise Movement (Green New Deal), 350.org (divestment), indigenous-led movements (Water Protectors), Just Stop Oil. (Source: various movement reports) ✊",
+    "Tactics span spectrum: peaceful protests, school strikes, voter mobilization, shareholder activism, lawsuits (2,341 climate cases filed worldwide), civil disobedience, art and culture. Each plays a role in shifting Overton window. (Source: Grantham Research Institute Climate Litigation) ⚖️",
+    "Impact: climate litigation has won major victories—Dutch Urgenda case (government must cut emissions), German Constitutional Court (strengthen 2030 targets), Shell ordered to cut emissions 45%. Movements shift public discourse and political possibility. (Source: Sabin Center, Client Earth) 🏛️",
+    "Youth voice powerful: surveys show 75% of young people anxious about climate. This energy translates to political action. Intergenerational justice frames: those who will live longest with consequences deserve voice now. Every generation needs climate activists. (Source: Lancet Planetary Health, Greta Thunberg) 🌱"
+  ],
+  "environmental justice": [
+    "Environmental justice recognizes that pollution and climate impacts disproportionately affect low-income communities and communities of color. In the US, Black Americans breathe 56% more pollutant particles than they produce. (Source: EPA Environmental Justice, PNAS) ⚖️",
+    "Climate injustice is global: countries contributing least to emissions suffer most. Africa produces 3.8% of emissions but faces most severe impacts—heat, drought, flooding. Small island states face existential sea level threat despite minimal emissions. (Source: IPCC AR6 WG2, Climate Vulnerable Forum) 🌍",
+    "Historical responsibility: industrialized countries (US, EU, Japan) responsible for majority of cumulative emissions. Climate reparations and Loss & Damage finance (fund agreed COP27) aim to address this inequity. (Source: Carbon Brief Historical Emissions) 💰",
+    "Just transition: ensuring shift to clean economy doesn't harm workers and communities dependent on fossil fuels. Includes job retraining, economic diversification, social safety nets. Coal regions need investment and dignity in transition. (Source: ILO Just Transition Guidelines, BlueGreen Alliance) 👷"
+  ],
+  
+  // ========================
+  // CLIMATE PSYCHOLOGY & COMMUNICATION (Sources: Yale Climate Communication, APA)
+  // ========================
+  "climate anxiety": [
+    "Climate anxiety (eco-anxiety, climate distress) is rational emotional response to real threat. 75% of young people find climate future frightening; 59% very or extremely worried. It's not a disorder but an appropriate response. (Source: Lancet Planetary Health 2021) 💚",
+    "Healthy responses: channel anxiety into action (activism, career choices, lifestyle changes), connect with community (shared concern reduces isolation), limit doomscrolling, focus on solutions, practice self-compassion. (Source: APA Climate Mental Health, Force of Nature) 🌱",
+    "The paradox: enough concern to motivate action, not so much it paralyzes. Balance awareness of problem with focus on solutions and collective action. Individual action + systemic change together. (Source: Yale Program on Climate Change Communication) ⚖️",
+    "Hope is active: not naive optimism but 'stubborn hope' or 'urgent optimism.' Solutions exist, momentum is building, young people are powerful. Every fraction of a degree matters—there's no cliff edge, just gradations. (Source: Katharine Hayhoe, Mary Robinson) 🌟"
+  ],
+  "climate communication": [
+    "Effective climate communication: lead with local, personal impacts (not polar bears); frame around values (freedom, fairness, innovation); tell stories with human characters; emphasize solutions and agency. (Source: Climate Outreach, Grist) 📣",
+    "Avoid: information deficit model (more facts don't change minds), doom and gloom without solutions, partisan framing, jargon, guilt-tripping. People motivated by hope and self-efficacy more than fear. (Source: American Psychologist, George Marshall) 🧠",
+    "The messenger matters: trust is key. People respond to those like them—farmers trust farmers, faith leaders influence congregations, doctors influence patients. Find trusted voices in each community. (Source: Yale Climate Communication, Katherine Hayhoe) 👥",
+    "Shift is happening: 72% of Americans now think climate change is happening, 57% human-caused. 70% support climate action. Youth overwhelmingly engaged. But intensity of concern matters—making it salient drives action. (Source: Yale Climate Opinion Maps 2023) 📈"
+  ],
+  
+  // ========================
+  // SOLUTIONS & HOPE (Sources: Project Drawdown, IEA, various)
+  // ========================
+  "climate solutions": [
+    "Top solutions by impact (Drawdown): 1) Reduce food waste 2) Plant-rich diets 3) Clean cooking 4) Distributed solar 5) Refrigerant management 6) Tropical forest restoration 7) Onshore wind 8) Reduced food packaging 9) Electric cars 10) Solar farms. (Source: Project Drawdown 2024) 🌍",
+    "Technology is ready: solar and wind cheapest power sources, EVs reaching price parity, heat pumps more efficient than gas, batteries plummeting in cost, green hydrogen scaling. Now need policy and investment to deploy at speed. (Source: IEA Net Zero Roadmap) ⚡",
+    "Co-benefits make action a win-win: clean energy creates 3x more jobs than fossil fuels, reduces air pollution (7 million deaths/year from fossil fuels), improves energy security, reduces fuel poverty. (Source: IRENA, Lancet Countdown) 💪",
+    "We can limit warming if we act now: 1.5°C still possible but requires halving emissions by 2030, net-zero by 2050. Every 0.1°C matters. It's not all-or-nothing—2°C is better than 3°C is better than 4°C. (Source: IPCC AR6 Synthesis) 📉"
+  ],
+  "hope and action": [
+    "Progress is real: renewable capacity additions broke records (507 GW in 2023), EV sales hit 14 million, global emissions growth is slowing, more than 150 countries have net-zero targets, corporate commitments multiplying. (Source: IEA, BloombergNEF) ✨",
+    "Success stories: Costa Rica generates 99% electricity from renewables; UK cut emissions 49% below 1990 levels while growing economy; Bhutan is carbon negative; Morocco building world's largest solar plant; India leads in new solar capacity. (Source: Various national reports) 🌟",
+    "Young people are powerful: not just the future but agents of change NOW. Student movements, young candidates, career choices, innovation, social media influence—generational transformation is underway. (Source: Fridays for Future, youth surveys) 🌱",
+    "Your actions matter: direct impact + social influence (each person influences 5-15 others) + market signals + political voice + identity shift. Be part of the solution. Climate action is the greatest opportunity to improve quality of life for current and future generations. (Source: Seth Wynes, Kimberly Nicholas) 💚"
   ]
 };
 
