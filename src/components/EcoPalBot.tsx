@@ -5,8 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car } from "lucide-react";
+import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles } from "lucide-react";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
+import { useEcoPalMemory } from "@/hooks/useEcoPalMemory";
 
 interface EcoPalBotProps {
   isOpen: boolean;
@@ -520,6 +521,8 @@ const getAdvancedResponse = (userInput: string, conversationHistory: Message[]):
 };
 
 export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
+  const { profile, trackQuestion, getPersonalizedGreeting, getRecommendedTopics, getPersonalizedContext } = useEcoPalMemory();
+  
   const [messages, setMessages] = useState<Message[]>(() => {
     const savedMessages = localStorage.getItem('ecopal-conversation');
     if (savedMessages) {
@@ -534,20 +537,28 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
       }
     }
     
-    return [
-      {
-        id: '1',
-        content: "Hello! 🌱 I'm EcoPal, your AI environmental companion with extensive knowledge on climate science, renewable energy, sustainable living, biodiversity, and much more! Ask me anything—I'm here to help you understand our planet better! 🌍",
-        sender: 'ecopal',
-        timestamp: new Date()
-      }
-    ];
+    return [];
   });
   
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [hasShownGreeting, setHasShownGreeting] = useState(false);
+
+  // Show personalized greeting when dialog opens
+  useEffect(() => {
+    if (isOpen && !hasShownGreeting && messages.length === 0) {
+      const greeting = getPersonalizedGreeting();
+      setMessages([{
+        id: '1',
+        content: greeting,
+        sender: 'ecopal',
+        timestamp: new Date()
+      }]);
+      setHasShownGreeting(true);
+    }
+  }, [isOpen, hasShownGreeting, messages.length, getPersonalizedGreeting]);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -563,9 +574,10 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
   }, [messages]);
 
   const clearConversation = () => {
+    const greeting = getPersonalizedGreeting();
     const initialMessage = {
       id: '1',
-      content: "Hello! 🌱 I'm EcoPal, your AI environmental companion with extensive knowledge on climate science, renewable energy, sustainable living, biodiversity, and much more! Ask me anything—I'm here to help you understand our planet better! 🌍",
+      content: greeting,
       sender: 'ecopal' as const,
       timestamp: new Date()
     };
@@ -575,6 +587,9 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
 
   const handleSendMessage = () => {
     if (!inputValue.trim() || isTyping) return;
+
+    // Track the question for personalization
+    trackQuestion(inputValue);
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -600,7 +615,14 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
     }, 300);
 
     setTimeout(() => {
-      const response = getAdvancedResponse(inputValue, messages);
+      let response = getAdvancedResponse(inputValue, messages);
+      
+      // Add personalized context occasionally (every 3rd question)
+      const context = getPersonalizedContext();
+      if (context && profile.totalQuestions % 3 === 0 && profile.totalQuestions > 0) {
+        response = `${context}\n\n${response}`;
+      }
+      
       const ecopalMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: response,
@@ -630,7 +652,7 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="w-[95vw] sm:w-[90vw] max-w-3xl h-[85vh] sm:h-[80vh] max-h-[700px] flex flex-col p-0 gap-0 overflow-hidden rounded-2xl border-2 border-primary/20 shadow-2xl">
-        {/* Header - Compact and responsive */}
+        {/* Header - Compact and responsive with personalization */}
         <DialogHeader className="px-3 sm:px-5 py-3 sm:py-4 border-b bg-gradient-to-r from-primary/10 via-green-500/10 to-emerald-500/10 backdrop-blur-sm flex-shrink-0">
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="relative">
@@ -646,7 +668,24 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                 EcoPal
                 <span className="text-xs sm:text-sm font-normal text-muted-foreground hidden xs:inline">• AI Environmental Expert</span>
               </DialogTitle>
-              <p className="text-xs text-muted-foreground truncate">Ask me anything about the environment! 🌍</p>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="truncate">Ask me anything about the environment! 🌍</span>
+              </div>
+            </div>
+            {/* User stats badges */}
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              {profile.learningStreak >= 2 && (
+                <div className="flex items-center gap-1 px-2 py-1 bg-orange-500/20 text-orange-600 rounded-full text-xs font-medium">
+                  <span>🔥</span>
+                  <span className="hidden sm:inline">{profile.learningStreak}</span>
+                </div>
+              )}
+              {profile.totalQuestions > 0 && (
+                <div className="flex items-center gap-1 px-2 py-1 bg-primary/20 text-primary rounded-full text-xs font-medium">
+                  <Sparkles className="w-3 h-3" />
+                  <span className="hidden sm:inline">{profile.totalQuestions}</span>
+                </div>
+              )}
             </div>
           </div>
         </DialogHeader>
