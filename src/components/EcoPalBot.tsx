@@ -5,7 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles, Compass, TrendingUp } from "lucide-react";
+import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles, Compass, TrendingUp, Trophy, Target, Star, Flame, Award, BookOpen, CheckCircle2, Circle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 import { useEcoPalMemory } from "@/hooks/useEcoPalMemory";
 
@@ -695,14 +697,18 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
           <Tabs defaultValue="chat" className="flex-1 flex flex-col min-h-0">
             {/* Tab Navigation - Compact */}
             <div className="px-3 sm:px-5 pt-2 sm:pt-3 pb-2 border-b bg-background/95 flex-shrink-0">
-              <TabsList className="grid w-full grid-cols-2 h-9 sm:h-10 bg-muted/50 rounded-xl">
-                <TabsTrigger value="chat" className="flex items-center gap-1.5 text-xs sm:text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg transition-all">
+              <TabsList className="grid w-full grid-cols-3 h-9 sm:h-10 bg-muted/50 rounded-xl">
+                <TabsTrigger value="chat" className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg transition-all">
                   <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  <span>Chat</span>
+                  <span className="hidden xs:inline">Chat</span>
                 </TabsTrigger>
-                <TabsTrigger value="questions" className="flex items-center gap-1.5 text-xs sm:text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg transition-all">
+                <TabsTrigger value="questions" className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg transition-all">
                   <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  <span>Topics</span>
+                  <span className="hidden xs:inline">Topics</span>
+                </TabsTrigger>
+                <TabsTrigger value="profile" className="flex items-center gap-1 sm:gap-1.5 text-xs sm:text-sm font-medium data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg transition-all">
+                  <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  <span className="hidden xs:inline">Profile</span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -956,6 +962,249 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                         </div>
                       </Card>
                     </div>
+                  </div>
+                </ScrollArea>
+              </div>
+            </TabsContent>
+
+            {/* Profile Tab - Learning Journey */}
+            <TabsContent value="profile" className="flex-1 mt-0 px-3 sm:px-5 pb-3 sm:pb-4 min-h-0 overflow-hidden">
+              <div className="h-full flex flex-col min-h-0 overflow-hidden">
+                <div className="py-1.5 sm:py-2 flex-shrink-0">
+                  <h3 className="font-semibold text-primary flex items-center gap-2 text-xs sm:text-sm">
+                    <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    Your Learning Journey
+                  </h3>
+                </div>
+                
+                <ScrollArea className="flex-1 min-h-0 overflow-hidden">
+                  <div className="space-y-3 sm:space-y-4 pr-2">
+                    
+                    {/* Stats Overview */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <Card className="p-3 bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 bg-primary/20 rounded-lg">
+                            <Flame className="w-4 h-4 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-lg font-bold text-primary">{profile.learningStreak}</p>
+                            <p className="text-[10px] text-muted-foreground">Day Streak</p>
+                          </div>
+                        </div>
+                      </Card>
+                      
+                      <Card className="p-3 bg-gradient-to-br from-amber-500/10 to-orange-500/5 border-amber-500/20 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 bg-amber-500/20 rounded-lg">
+                            <MessageCircle className="w-4 h-4 text-amber-600" />
+                          </div>
+                          <div>
+                            <p className="text-lg font-bold text-amber-600">{profile.totalQuestions}</p>
+                            <p className="text-[10px] text-muted-foreground">Questions</p>
+                          </div>
+                        </div>
+                      </Card>
+                      
+                      <Card className="p-3 bg-gradient-to-br from-blue-500/10 to-cyan-500/5 border-blue-500/20 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 bg-blue-500/20 rounded-lg">
+                            <BookOpen className="w-4 h-4 text-blue-600" />
+                          </div>
+                          <div>
+                            <p className="text-lg font-bold text-blue-600">{profile.topicsExplored.length}/8</p>
+                            <p className="text-[10px] text-muted-foreground">Topics</p>
+                          </div>
+                        </div>
+                      </Card>
+                      
+                      <Card className="p-3 bg-gradient-to-br from-purple-500/10 to-violet-500/5 border-purple-500/20 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="p-2 bg-purple-500/20 rounded-lg">
+                            <Target className="w-4 h-4 text-purple-600" />
+                          </div>
+                          <div>
+                            <p className="text-lg font-bold text-purple-600 capitalize">{profile.experienceLevel}</p>
+                            <p className="text-[10px] text-muted-foreground">Level</p>
+                          </div>
+                        </div>
+                      </Card>
+                    </div>
+
+                    {/* Experience Progress */}
+                    <Card className="p-3 rounded-xl border-muted">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium flex items-center gap-1.5">
+                            <Star className="w-3.5 h-3.5 text-amber-500" />
+                            Experience Level
+                          </span>
+                          <Badge variant="secondary" className="text-[10px] capitalize">
+                            {profile.experienceLevel}
+                          </Badge>
+                        </div>
+                        <Progress 
+                          value={
+                            profile.experienceLevel === 'expert' ? 100 :
+                            profile.experienceLevel === 'advanced' ? 75 :
+                            profile.experienceLevel === 'intermediate' ? 50 : 25
+                          } 
+                          className="h-2"
+                        />
+                        <p className="text-[10px] text-muted-foreground">
+                          {profile.experienceLevel === 'expert' 
+                            ? 'Maximum level reached! 🎓' 
+                            : profile.experienceLevel === 'advanced'
+                            ? `${50 - profile.totalQuestions} more questions to Expert`
+                            : profile.experienceLevel === 'intermediate'
+                            ? `${25 - profile.totalQuestions} more questions to Advanced`
+                            : `${10 - profile.totalQuestions} more questions to Intermediate`
+                          }
+                        </p>
+                      </div>
+                    </Card>
+
+                    {/* Achievements */}
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-semibold flex items-center gap-1.5">
+                        <Award className="w-3.5 h-3.5 text-amber-500" />
+                        Achievements
+                      </h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: 'first-question', label: 'First Steps', desc: 'Asked your first question', icon: '🌱', unlocked: profile.totalQuestions >= 1 },
+                          { id: 'explorer', label: 'Explorer', desc: 'Explored 3 topics', icon: '🧭', unlocked: profile.topicsExplored.length >= 3 },
+                          { id: 'curious', label: 'Curious Mind', desc: 'Asked 10 questions', icon: '💡', unlocked: profile.totalQuestions >= 10 },
+                          { id: 'dedicated', label: 'Dedicated', desc: '3-day streak', icon: '🔥', unlocked: profile.learningStreak >= 3 },
+                          { id: 'scholar', label: 'Scholar', desc: 'Asked 25 questions', icon: '📚', unlocked: profile.totalQuestions >= 25 },
+                          { id: 'master', label: 'Eco Master', desc: 'Explored all topics', icon: '🌍', unlocked: profile.topicsExplored.length >= 8 },
+                        ].map((achievement) => (
+                          <Card 
+                            key={achievement.id}
+                            className={`p-2.5 rounded-xl transition-all ${
+                              achievement.unlocked 
+                                ? 'bg-gradient-to-br from-amber-500/10 to-yellow-500/5 border-amber-500/30' 
+                                : 'bg-muted/30 border-muted opacity-60'
+                            }`}
+                          >
+                            <div className="flex items-start gap-2">
+                              <span className={`text-lg ${!achievement.unlocked && 'grayscale'}`}>
+                                {achievement.icon}
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-1">
+                                  <span className="text-[11px] font-medium truncate">{achievement.label}</span>
+                                  {achievement.unlocked && (
+                                    <CheckCircle2 className="w-3 h-3 text-green-500 flex-shrink-0" />
+                                  )}
+                                </div>
+                                <p className="text-[9px] text-muted-foreground">{achievement.desc}</p>
+                              </div>
+                            </div>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Topics Explored Visualization */}
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-semibold flex items-center gap-1.5">
+                        <Compass className="w-3.5 h-3.5 text-blue-500" />
+                        Topics Progress
+                      </h4>
+                      <div className="space-y-1.5">
+                        {[
+                          { id: 'renewable-energy', label: 'Renewable Energy', icon: '⚡' },
+                          { id: 'climate-science', label: 'Climate Science', icon: '🌡️' },
+                          { id: 'sustainable-living', label: 'Sustainable Living', icon: '🌱' },
+                          { id: 'nature-biodiversity', label: 'Nature & Biodiversity', icon: '🦋' },
+                          { id: 'water-conservation', label: 'Water Conservation', icon: '💧' },
+                          { id: 'transportation', label: 'Green Transport', icon: '🚗' },
+                          { id: 'food-agriculture', label: 'Sustainable Food', icon: '🥗' },
+                          { id: 'policy-economics', label: 'Climate Policy', icon: '📋' },
+                        ].map((topic) => {
+                          const isExplored = profile.topicsExplored.includes(topic.id);
+                          const isFavorite = profile.favoriteTopics.includes(topic.id);
+                          const interestCount = profile.interests[topic.id] || 0;
+                          
+                          return (
+                            <div 
+                              key={topic.id}
+                              className={`flex items-center gap-2 p-2 rounded-lg transition-all ${
+                                isExplored 
+                                  ? 'bg-primary/5 border border-primary/20' 
+                                  : 'bg-muted/30 border border-transparent'
+                              }`}
+                            >
+                              <span className={`text-sm ${!isExplored && 'grayscale opacity-50'}`}>
+                                {topic.icon}
+                              </span>
+                              <span className={`text-xs flex-1 ${isExplored ? 'font-medium' : 'text-muted-foreground'}`}>
+                                {topic.label}
+                              </span>
+                              {isFavorite && (
+                                <Star className="w-3 h-3 text-amber-500 fill-amber-500" />
+                              )}
+                              {isExplored ? (
+                                <Badge variant="secondary" className="text-[9px] px-1.5 py-0">
+                                  {interestCount} {interestCount === 1 ? 'Q' : 'Qs'}
+                                </Badge>
+                              ) : (
+                                <Circle className="w-3 h-3 text-muted-foreground/30" />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Favorite Topics */}
+                    {profile.favoriteTopics.length > 0 && (
+                      <Card className="p-3 bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-red-500/10 border-amber-500/20 rounded-xl">
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-semibold flex items-center gap-1.5">
+                            <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                            Your Favorite Topics
+                          </h4>
+                          <div className="flex flex-wrap gap-1.5">
+                            {profile.favoriteTopics.map((topic, idx) => {
+                              const topicNames: Record<string, string> = {
+                                'renewable-energy': '⚡ Energy',
+                                'climate-science': '🌡️ Climate',
+                                'sustainable-living': '🌱 Sustainability',
+                                'nature-biodiversity': '🦋 Nature',
+                                'water-conservation': '💧 Water',
+                                'transportation': '🚗 Transport',
+                                'food-agriculture': '🥗 Food',
+                                'policy-economics': '📋 Policy',
+                              };
+                              return (
+                                <Badge 
+                                  key={topic} 
+                                  className={`text-[10px] ${
+                                    idx === 0 
+                                      ? 'bg-amber-500/20 text-amber-700 border-amber-500/30' 
+                                      : 'bg-muted text-muted-foreground'
+                                  }`}
+                                >
+                                  {idx === 0 && '👑 '}
+                                  {topicNames[topic] || topic}
+                                </Badge>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </Card>
+                    )}
+
+                    {/* Sessions Info */}
+                    <Card className="p-3 bg-muted/30 border-muted rounded-xl">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>Total Sessions: {profile.totalSessions}</span>
+                        <span>Last Visit: {new Date(profile.lastVisit).toLocaleDateString()}</span>
+                      </div>
+                    </Card>
+
                   </div>
                 </ScrollArea>
               </div>
