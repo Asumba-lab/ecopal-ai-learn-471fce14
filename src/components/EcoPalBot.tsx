@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles } from "lucide-react";
+import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles, Compass, TrendingUp } from "lucide-react";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
 import { useEcoPalMemory } from "@/hooks/useEcoPalMemory";
 
@@ -822,6 +822,62 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                 
                 <ScrollArea className="flex-1 min-h-0 overflow-hidden">
                   <div className="space-y-2 sm:space-y-3 pr-2">
+                    
+                    {/* Personalized Recommendations - Only show if user has some history */}
+                    {profile.totalQuestions > 0 && (
+                      <div className="space-y-2 animate-in fade-in duration-300">
+                        <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                          <Compass className="w-3.5 h-3.5" />
+                          <span>Recommended for you</span>
+                        </div>
+                        <div className="grid grid-cols-1 gap-1.5">
+                          {getRecommendedTopics().slice(0, 3).map((topic, idx) => {
+                            const topicLabels: Record<string, { label: string; icon: string; question: string }> = {
+                              'renewable-energy': { label: 'Renewable Energy', icon: '⚡', question: 'How does renewable energy help the environment?' },
+                              'climate-science': { label: 'Climate Science', icon: '🌡️', question: 'What is climate change and how does it affect us?' },
+                              'sustainable-living': { label: 'Sustainable Living', icon: '🌱', question: 'How can I live more sustainably?' },
+                              'nature-biodiversity': { label: 'Nature & Biodiversity', icon: '🦋', question: 'Why is biodiversity important for our planet?' },
+                              'water-conservation': { label: 'Water Conservation', icon: '💧', question: 'How can I conserve water at home?' },
+                              'transportation': { label: 'Green Transport', icon: '🚗', question: 'What are the most eco-friendly transportation options?' },
+                              'food-agriculture': { label: 'Sustainable Food', icon: '🥗', question: 'How does my diet affect the environment?' },
+                              'policy-economics': { label: 'Climate Policy', icon: '📋', question: 'What is the Paris Agreement and why does it matter?' },
+                            };
+                            const info = topicLabels[topic] || { label: topic, icon: '🌍', question: `Tell me about ${topic}` };
+                            const isExplored = profile.topicsExplored.includes(topic);
+                            
+                            return (
+                              <Button
+                                key={topic}
+                                variant="outline"
+                                className={`w-full h-auto p-2.5 justify-start text-left rounded-xl transition-all ${
+                                  isExplored 
+                                    ? 'border-muted bg-muted/30' 
+                                    : 'border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50'
+                                }`}
+                                onClick={() => handleQuestionClick(info.question)}
+                              >
+                                <div className="flex items-center gap-2 w-full">
+                                  <span className="text-lg flex-shrink-0">{info.icon}</span>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-1.5">
+                                      <span className="font-medium text-xs">{info.label}</span>
+                                      {!isExplored && (
+                                        <span className="px-1.5 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full font-medium">
+                                          New
+                                        </span>
+                                      )}
+                                    </div>
+                                    <p className="text-[10px] text-muted-foreground truncate">{info.question}</p>
+                                  </div>
+                                  <TrendingUp className="w-3 h-3 text-primary/50 flex-shrink-0" />
+                                </div>
+                              </Button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Category Grid */}
                     <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
                       {questionCategories.map((category, idx) => {
@@ -862,6 +918,23 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                           </Button>
                         ))}
                       </div>
+                    )}
+
+                    {/* User Progress Summary - Show when user has history */}
+                    {profile.totalQuestions > 0 && (
+                      <Card className="p-2.5 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border-amber-500/30 rounded-xl">
+                        <div className="flex items-center gap-2">
+                          <div className="p-1.5 bg-amber-500/30 rounded-lg">
+                            <TrendingUp className="w-3.5 h-3.5 text-amber-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-xs font-medium">Your Learning Progress</p>
+                            <p className="text-[10px] text-muted-foreground">
+                              {profile.topicsExplored.length} of 8 topics explored • {profile.totalQuestions} questions asked
+                            </p>
+                          </div>
+                        </div>
+                      </Card>
                     )}
 
                     {/* Info cards */}
