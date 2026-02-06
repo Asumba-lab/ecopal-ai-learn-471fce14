@@ -2,10 +2,21 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles, Compass, TrendingUp, Trophy, Target, Star, Flame, Award, BookOpen, CheckCircle2, Circle } from "lucide-react";
+import { Send, Bot, User, Lightbulb, MessageCircle, RotateCcw, Leaf, Zap, Droplets, TreePine, Recycle, Wind, Sun, Car, Sparkles, Compass, TrendingUp, Trophy, Target, Star, Flame, Award, BookOpen, CheckCircle2, Circle, Trash2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import ecopalMascot from "@/assets/ecopal-mascot.jpg";
@@ -523,7 +534,7 @@ const getAdvancedResponse = (userInput: string, conversationHistory: Message[]):
 };
 
 export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
-  const { profile, trackQuestion, getPersonalizedGreeting, getRecommendedTopics, getPersonalizedContext } = useEcoPalMemory();
+  const { profile, trackQuestion, getPersonalizedGreeting, getRecommendedTopics, getPersonalizedContext, resetProfile } = useEcoPalMemory();
   
   const [messages, setMessages] = useState<Message[]>(() => {
     const savedMessages = localStorage.getItem('ecopal-conversation');
@@ -1204,6 +1215,44 @@ export const EcoPalBot = ({ isOpen, onClose }: EcoPalBotProps) => {
                         <span>Last Visit: {new Date(profile.lastVisit).toLocaleDateString()}</span>
                       </div>
                     </Card>
+
+                    {/* Reset Progress Button */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full text-destructive border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+                        >
+                          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+                          Reset Progress
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Reset All Progress?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently delete all your learning data including:
+                            <ul className="list-disc list-inside mt-2 space-y-1">
+                              <li>Your {profile.learningStreak}-day learning streak</li>
+                              <li>All {profile.totalQuestions} questions asked</li>
+                              <li>Your {profile.topicsExplored.length} explored topics</li>
+                              <li>All unlocked achievements</li>
+                            </ul>
+                            <p className="mt-3 font-medium">This action cannot be undone.</p>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction 
+                            onClick={resetProfile}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          >
+                            Yes, Reset Everything
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
 
                   </div>
                 </ScrollArea>
