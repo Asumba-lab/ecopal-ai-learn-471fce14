@@ -4,11 +4,38 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Leaf, Home, Car, Utensils, ShoppingBag, Calculator } from "lucide-react";
-import { useState } from "react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Leaf, Home, Car, Utensils, ShoppingBag, Calculator, Zap, Droplets } from "lucide-react";
+import { useState, useRef } from "react";
 
 const SustainableLiving = () => {
   const [carbonCalculatorOpen, setCarbonCalculatorOpen] = useState(false);
+  const challengesSectionRef = useRef<HTMLElement>(null);
+  
+  // Carbon calculator state
+  const [electricityUsage, setElectricityUsage] = useState(500);
+  const [carMiles, setCarMiles] = useState(200);
+  const [flightsPerYear, setFlightsPerYear] = useState(2);
+  const [meatMealsPerWeek, setMeatMealsPerWeek] = useState(7);
+  const [calculatedFootprint, setCalculatedFootprint] = useState<number | null>(null);
+  
+  const calculateFootprint = () => {
+    // Simplified carbon footprint calculation (kg CO2 per month)
+    const electricityCarbon = electricityUsage * 0.4; // 0.4 kg CO2 per kWh
+    const carCarbon = carMiles * 0.21 * 4.3; // 0.21 kg per mile, ~4.3 weeks/month
+    const flightCarbon = (flightsPerYear / 12) * 1100; // ~1100 kg per flight averaged monthly
+    const meatCarbon = meatMealsPerWeek * 4.3 * 3.3; // ~3.3 kg CO2 per meat meal
+    
+    const totalMonthly = electricityCarbon + carCarbon + flightCarbon + meatCarbon;
+    setCalculatedFootprint(Math.round(totalMonthly));
+  };
+  
+  const scrollToChallenges = () => {
+    challengesSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const lifestyleAreas = [
     {
@@ -145,7 +172,12 @@ const SustainableLiving = () => {
                 <Calculator className="w-5 h-5 mr-2" />
                 Calculate Your Impact
               </Button>
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white text-white hover:bg-white/10"
+                onClick={scrollToChallenges}
+              >
                 Start Challenge
               </Button>
             </div>
@@ -201,7 +233,7 @@ const SustainableLiving = () => {
       </section>
 
       {/* Sustainability Challenges */}
-      <section className="py-20 bg-muted/30">
+      <section ref={challengesSectionRef} className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -319,6 +351,120 @@ const SustainableLiving = () => {
           </div>
         </div>
       </section>
+
+      {/* Carbon Footprint Calculator Dialog */}
+      <Dialog open={carbonCalculatorOpen} onOpenChange={setCarbonCalculatorOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Calculator className="w-5 h-5 text-primary" />
+              Carbon Footprint Calculator
+            </DialogTitle>
+            <DialogDescription>
+              Estimate your monthly carbon footprint based on your lifestyle choices.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-6 py-4">
+            {/* Electricity Usage */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-yellow-500" />
+                  Monthly Electricity (kWh)
+                </Label>
+                <span className="text-sm font-medium">{electricityUsage} kWh</span>
+              </div>
+              <Slider
+                value={[electricityUsage]}
+                onValueChange={(value) => setElectricityUsage(value[0])}
+                max={2000}
+                min={0}
+                step={50}
+              />
+            </div>
+            
+            {/* Car Miles */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="flex items-center gap-2">
+                  <Car className="w-4 h-4 text-blue-500" />
+                  Weekly Car Miles
+                </Label>
+                <span className="text-sm font-medium">{carMiles} miles</span>
+              </div>
+              <Slider
+                value={[carMiles]}
+                onValueChange={(value) => setCarMiles(value[0])}
+                max={500}
+                min={0}
+                step={10}
+              />
+            </div>
+            
+            {/* Flights */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="flex items-center gap-2">
+                  ✈️ Flights Per Year
+                </Label>
+                <span className="text-sm font-medium">{flightsPerYear} flights</span>
+              </div>
+              <Slider
+                value={[flightsPerYear]}
+                onValueChange={(value) => setFlightsPerYear(value[0])}
+                max={20}
+                min={0}
+                step={1}
+              />
+            </div>
+            
+            {/* Meat Meals */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <Label className="flex items-center gap-2">
+                  <Utensils className="w-4 h-4 text-orange-500" />
+                  Meat Meals Per Week
+                </Label>
+                <span className="text-sm font-medium">{meatMealsPerWeek} meals</span>
+              </div>
+              <Slider
+                value={[meatMealsPerWeek]}
+                onValueChange={(value) => setMeatMealsPerWeek(value[0])}
+                max={21}
+                min={0}
+                step={1}
+              />
+            </div>
+            
+            <Button onClick={calculateFootprint} className="w-full" variant="hero">
+              Calculate My Footprint
+            </Button>
+            
+            {/* Results */}
+            {calculatedFootprint !== null && (
+              <Card className="bg-gradient-to-r from-primary/10 to-green-500/10 border-primary/20">
+                <CardContent className="p-4">
+                  <div className="text-center space-y-2">
+                    <p className="text-sm text-muted-foreground">Your Estimated Monthly Carbon Footprint</p>
+                    <p className="text-4xl font-bold text-primary">{calculatedFootprint} kg</p>
+                    <p className="text-xs text-muted-foreground">CO₂ equivalent per month</p>
+                    <div className="pt-3 border-t mt-3">
+                      <p className="text-sm">
+                        {calculatedFootprint < 500 
+                          ? "🌟 Great job! You're below average!" 
+                          : calculatedFootprint < 800 
+                          ? "👍 Good start! Small changes can help more."
+                          : "💪 Room for improvement! Check our challenges."}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>
