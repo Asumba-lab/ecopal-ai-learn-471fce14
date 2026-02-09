@@ -1,12 +1,23 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Thermometer, Globe, TrendingUp, AlertTriangle, BookOpen, Play } from "lucide-react";
+import { Thermometer, Globe, TrendingUp, AlertTriangle, BookOpen, Play, CheckCircle2 } from "lucide-react";
+import { GreenhouseEffectModule } from "@/components/modules/GreenhouseEffectModule";
 
 const ClimateChange = () => {
+  const [greenhouseModuleOpen, setGreenhouseModuleOpen] = useState(false);
+  const [completedModules, setCompletedModules] = useState<string[]>([]);
+
+  const handleModuleComplete = (moduleId: string) => {
+    if (!completedModules.includes(moduleId)) {
+      setCompletedModules([...completedModules, moduleId]);
+    }
+  };
+
   const keyStats = [
     { label: "Global Temperature Rise", value: "+1.1°C", description: "Since pre-industrial times" },
     { label: "CO2 Concentration", value: "421 ppm", description: "Highest in 3 million years" },
@@ -120,44 +131,62 @@ const ClimateChange = () => {
               <div className="mt-6">
                 <div className="flex justify-between text-sm mb-2">
                   <span>Overall Progress</span>
-                  <span>0/4 modules completed</span>
+                  <span>{completedModules.length}/4 modules completed</span>
                 </div>
-                <Progress value={0} className="h-3" />
+                <Progress value={(completedModules.length / 4) * 100} className="h-3" />
               </div>
             </div>
 
             <div className="space-y-6">
-              {learningModules.map((module, index) => (
-                <Card key={index} className="hover:shadow-glow transition-all duration-300 group">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                          <BookOpen className="w-6 h-6 text-primary" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-xl">{module.title}</CardTitle>
-                          <div className="flex items-center gap-3 mt-1">
-                            <Badge className={getDifficultyColor(module.difficulty)}>
-                              {module.difficulty}
-                            </Badge>
-                            <span className="text-sm text-muted-foreground">{module.duration}</span>
+              {learningModules.map((module, index) => {
+                const isCompleted = completedModules.includes(module.title);
+                const isGreenhouseModule = module.title === "The Greenhouse Effect";
+                
+                return (
+                  <Card key={index} className={`hover:shadow-glow transition-all duration-300 group ${isCompleted ? 'border-green-500 bg-green-50/50' : ''}`}>
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors ${isCompleted ? 'bg-green-100' : 'bg-primary/10 group-hover:bg-primary/20'}`}>
+                            {isCompleted ? (
+                              <CheckCircle2 className="w-6 h-6 text-green-600" />
+                            ) : (
+                              <BookOpen className="w-6 h-6 text-primary" />
+                            )}
+                          </div>
+                          <div>
+                            <CardTitle className="text-xl flex items-center gap-2">
+                              {module.title}
+                              {isCompleted && <Badge className="text-xs bg-green-100 text-green-800">Completed</Badge>}
+                            </CardTitle>
+                            <div className="flex items-center gap-3 mt-1">
+                              <Badge className={getDifficultyColor(module.difficulty)}>
+                                {module.difficulty}
+                              </Badge>
+                              <span className="text-sm text-muted-foreground">{module.duration}</span>
+                            </div>
                           </div>
                         </div>
+                        <Button 
+                          variant={isCompleted ? "outline" : "hero"}
+                          onClick={() => {
+                            if (isGreenhouseModule) {
+                              setGreenhouseModuleOpen(true);
+                            } else {
+                              alert(`🚀 ${module.title} interactive module coming soon! Try "The Greenhouse Effect" module now.`);
+                            }
+                          }}
+                        >
+                          {isCompleted ? "Review Module" : "Start Module"}
+                        </Button>
                       </div>
-                      <Button 
-                        variant="hero"
-                        onClick={() => alert(`🚀 ${module.title} interactive module coming soon! Experience our demo challenges.`)}
-                      >
-                        Start Module
-                      </Button>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{module.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{module.description}</p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -224,6 +253,13 @@ const ClimateChange = () => {
       </section>
 
       <Footer />
+
+      {/* Greenhouse Effect Module Dialog */}
+      <GreenhouseEffectModule
+        open={greenhouseModuleOpen}
+        onOpenChange={setGreenhouseModuleOpen}
+        onComplete={() => handleModuleComplete("The Greenhouse Effect")}
+      />
     </div>
   );
 };
